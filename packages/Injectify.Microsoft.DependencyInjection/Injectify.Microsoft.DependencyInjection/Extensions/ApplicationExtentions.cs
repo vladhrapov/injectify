@@ -3,6 +3,7 @@ using Injectify.Microsoft.DependencyInjection.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,6 +12,9 @@ using Windows.UI.Xaml;
 
 namespace Injectify.Microsoft.DependencyInjection.Extensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ApplicationExtentions
     {
         /// <summary>
@@ -34,9 +38,10 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
         private static void BootstrapApp(this Application application, IStartup<ServiceCollection, ServiceProvider> startup)
         {
             var appClass = DependencyInjectionHelper.GetAppType<ServiceCollection, ServiceProvider>();
-            //var appBootstrap = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsClass && t.DeclaringType.IsAssignableFrom(typeof(Application)));
 
             var bootAttribute = appClass?.GetCustomAttribute<UwpApplicationBootstrapAttribute>();
+
+            // bootstrap startup services into application
             bootAttribute.Bootstrap(application, startup);
         }
     }

@@ -11,29 +11,34 @@ using Windows.UI.Xaml;
 
 namespace Injectify.Microsoft.DependencyInjection
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     public sealed class UwpApplicationBootstrapAttribute : Attribute
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public UwpApplicationBootstrapAttribute()
         {
         }
 
+        /// <summary>
+        /// Bootstrap application marked by UwpApplicationBootstrap.
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="startup"></param>
         public void Bootstrap(Application application, IStartup<ServiceCollection, ServiceProvider> startup)
         {
-            //Debug.WriteLine($"DI UWPAPPBOOTSTRAP: {Assembly.GetEntryAssembly().GetTypes().Where(t => t.IsClass && typeof(t).C).FirstOrDefault().FullName}");
-            var a = Assembly.GetEntryAssembly()
+            var uwpAppClass = Assembly.GetEntryAssembly()
                 .GetTypes()
-                .Where(t => t.IsClass && t.IsAssignableFrom(typeof(IUwpApplication<>)))
+                .Where(t => t.IsClass && (t.BaseType == typeof(Application))) // ToDo: Maybe better to check whether implements IUwpApplication
                 .FirstOrDefault();
 
-            var servicesProp = a.GetProperties()
+            var servicesProp = uwpAppClass.GetProperties()
                 .Where(p => p.PropertyType == typeof(ServiceProvider))
                 .FirstOrDefault();
-                
-            //var filteredProps = application.GetType()
-            //    .GetProperties()
-            //    .Where(p => p.PropertyType == typeof(ServiceProvider));
-            //var servicesProp = filteredProps?.FirstOrDefault();
 
             servicesProp.SetValue(application, startup.Services);
         }

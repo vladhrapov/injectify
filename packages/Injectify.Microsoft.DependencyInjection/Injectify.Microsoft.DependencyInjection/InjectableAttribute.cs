@@ -3,6 +3,7 @@ using Injectify.Microsoft.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,13 +12,24 @@ using Windows.UI.Xaml;
 
 namespace Injectify.Microsoft.DependencyInjection
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     public class InjectableAttribute : Attribute, IInjectable
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public InjectableAttribute()
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TPage"></typeparam>
+        /// <param name="page"></param>
         public void Bootstrap<TPage>(TPage page)
         {
             BootstrapProps(page);
@@ -34,7 +46,7 @@ namespace Injectify.Microsoft.DependencyInjection
             {
                 if (propInfo.PropertyType?.GenericTypeArguments?.Any() ?? false)
                 {
-                    var serviceProvider = GetApplication();
+                    var serviceProvider = GetServiceProviderFromApplication();
                     var instDemo = serviceProvider.GetServices(propInfo.PropertyType?.GenericTypeArguments?.FirstOrDefault());
                     //var instDemo = app.Services.GetServices(propInfo.PropertyType?.GenericTypeArguments?.FirstOrDefault());
 
@@ -43,7 +55,7 @@ namespace Injectify.Microsoft.DependencyInjection
                 }
                 else
                 {
-                    var serviceProvider = GetApplication();
+                    var serviceProvider = GetServiceProviderFromApplication();
                     var instDemo = serviceProvider.GetService(propInfo.PropertyType);
                     //var instDemo = app.Services.GetService(propInfo.PropertyType);
 
@@ -53,13 +65,12 @@ namespace Injectify.Microsoft.DependencyInjection
             }
         }
 
-        private ServiceProvider GetApplication()
+        private ServiceProvider GetServiceProviderFromApplication()
         {
             var classes = Assembly.GetEntryAssembly()
                 .GetTypes();
             var classesAll = classes
-                .Where(type =>
-                    type.IsClass == true && HasInterfaces(type));
+                .Where(type => type.IsClass == true && HasInterfaces(type));
 
             var applicationClass = classesAll
                 .FirstOrDefault();

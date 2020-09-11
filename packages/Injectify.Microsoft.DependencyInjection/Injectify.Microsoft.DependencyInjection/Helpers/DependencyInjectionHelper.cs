@@ -14,8 +14,6 @@ namespace Injectify.Microsoft.DependencyInjection.Helpers
     {
         public static Type GetAppType<TServiceCollection, TServiceProvider>()
         {
-            Debug.WriteLine($"DI ASSEMBLY: {Assembly.GetCallingAssembly().FullName} \n");
-            Debug.WriteLine($"DI ASSEMBLY: {Assembly.GetEntryAssembly().FullName}\n");
             var classes = Assembly.GetEntryAssembly()
                 .GetTypes()
                 .Where(t => t.IsClass && HasInterfaces2<TServiceCollection, TServiceProvider>(t));
@@ -47,13 +45,11 @@ namespace Injectify.Microsoft.DependencyInjection.Helpers
         private static bool HasInterfaces2<TServiceCollection, TServiceProvider>(Type type)
         {
             var interfaces = type.GetInterfaces();
-            Debug.WriteLine($"====BEFORE ==== HasInterfaces2 DI ASSEMBLY : {string.Join(',', interfaces.Select(i => i.FullName))}\n");
 
             var filtered = interfaces.Where(i => i.IsGenericType);
             filtered = filtered.Where(i => i.GetGenericTypeDefinition() == typeof(IUwpApplication<>));
             //filtered = filtered.Where(i => i.GenericTypeArguments?.FirstOrDefault() == typeof(TServiceProvider));
 
-            Debug.WriteLine($"+++AFTER+++ HasInterfaces2 DI ASSEMBLY : {type.FullName} RESULT: {filtered.Any()}\n");
             return filtered.Any();
         }
     }
