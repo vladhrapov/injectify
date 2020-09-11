@@ -6,6 +6,7 @@
     <Company>-</Company>
     <Product>Injectify.Abstractions</Product>
     <Authors>Vladyslav Khrapov</Authors>
+    <RepositoryUrl>https://github.com/vladhrapov/uwp-dependency-injection</RepositoryUrl>
     <AssemblyVersion>0.1.0.0</AssemblyVersion>
     <FileVersion>0.1.0.0</FileVersion>
     <PackageTags>UWP; DI; Dependency Injection;</PackageTags>
