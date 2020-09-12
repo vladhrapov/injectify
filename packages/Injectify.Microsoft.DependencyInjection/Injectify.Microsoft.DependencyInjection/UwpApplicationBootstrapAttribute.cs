@@ -29,7 +29,7 @@ namespace Injectify.Microsoft.DependencyInjection
         /// </summary>
         /// <param name="application"></param>
         /// <param name="startup"></param>
-        public void Bootstrap(Application application, IStartup<ServiceCollection, ServiceProvider> startup)
+        public void Bootstrap(Application application, IStartup<ServiceCollection> startup)
         {
             var uwpAppClass = Assembly.GetEntryAssembly()
                 .GetTypes()
@@ -40,7 +40,11 @@ namespace Injectify.Microsoft.DependencyInjection
                 .Where(p => p.PropertyType == typeof(ServiceProvider))
                 .FirstOrDefault();
 
-            servicesProp.SetValue(application, startup.Services);
+            var services = new ServiceCollection();
+            startup.ConfigureServices(services);
+            var provider = services.BuildServiceProvider();
+
+            servicesProp.SetValue(application, provider);
         }
     }
 }

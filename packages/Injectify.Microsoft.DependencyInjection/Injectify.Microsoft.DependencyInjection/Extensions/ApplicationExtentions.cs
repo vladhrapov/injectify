@@ -2,6 +2,7 @@
 using Injectify.Microsoft.DependencyInjection.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
             var startupClass = DependencyInjectionHelper.GetStartupType<ServiceCollection, ServiceProvider>();
 
             // create instance of the startup
-            var startupInstance = Activator.CreateInstance(startupClass) as IStartup<ServiceCollection, ServiceProvider>;
+            var startupInstance = Activator.CreateInstance(startupClass) as IStartup<ServiceCollection>;
 
             // set up configured service provider
             //this.Services = ((object)st.Services) as ServiceProvider;
@@ -35,7 +36,7 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
             application.BootstrapApp(startupInstance);
         }
 
-        private static void BootstrapApp(this Application application, IStartup<ServiceCollection, ServiceProvider> startup)
+        private static void BootstrapApp(this Application application, IStartup<ServiceCollection> startup)
         {
             var appClass = DependencyInjectionHelper.GetAppType<ServiceCollection, ServiceProvider>();
 
