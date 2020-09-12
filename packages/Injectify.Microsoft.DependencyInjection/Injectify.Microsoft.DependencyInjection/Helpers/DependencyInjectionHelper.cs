@@ -35,9 +35,8 @@ namespace Injectify.Microsoft.DependencyInjection.Helpers
             var interfaces = type.GetInterfaces();
 
             var filtered = interfaces.Where(i => i.IsGenericType);
-            filtered = filtered.Where(i => i.GetGenericTypeDefinition() == typeof(IStartup<,>));
-            filtered = filtered.Where(i => i.GenericTypeArguments?.FirstOrDefault() == typeof(TServiceCollection)
-                && i.GenericTypeArguments?.LastOrDefault() == typeof(TServiceProvider));
+            filtered = filtered.Where(i => i.GetGenericTypeDefinition() == typeof(IStartup<>));
+            filtered = filtered.Where(i => i.GenericTypeArguments?.FirstOrDefault() == typeof(TServiceCollection));
 
             return filtered.Any();
         }
