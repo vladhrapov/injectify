@@ -136,7 +136,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Extensions\ApplicationExtentions.cs" />
-    <Compile Include="Extensions\Bootstrap.cs" />
+    <Compile Include="Extensions\Bootstraper.cs" />
     <Compile Include="Helpers\DependencyInjectionHelper.cs" />
     <Compile Include="InjectableAttribute.cs" />
     <Compile Include="InjectAttribute.cs" />

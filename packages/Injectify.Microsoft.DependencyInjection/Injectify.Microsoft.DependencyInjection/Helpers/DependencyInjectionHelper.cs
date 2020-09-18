@@ -16,21 +16,21 @@ namespace Injectify.Microsoft.DependencyInjection.Helpers
         {
             var classes = Assembly.GetEntryAssembly()
                 .GetTypes()
-                .Where(t => t.IsClass && HasInterfaces2<TServiceCollection, TServiceProvider>(t));
+                .Where(t => t.IsClass && HasInterfaces2<TServiceProvider>(t));
 
             return classes?.FirstOrDefault();
         }
 
-        public static Type GetStartupType<TServiceCollection, TServiceProvider>()
+        public static Type GetStartupType<TServiceCollection>()
         {
             var classes = Assembly.GetEntryAssembly()
                 .GetTypes()
-                .Where(t => t.IsClass && HasInterfaces<TServiceCollection, TServiceProvider>(t));
+                .Where(t => t.IsClass && HasInterfaces<TServiceCollection>(t));
 
             return classes?.FirstOrDefault();
         }
 
-        private static bool HasInterfaces<TServiceCollection, TServiceProvider>(Type type)
+        private static bool HasInterfaces<TServiceCollection>(Type type)
         {
             var interfaces = type.GetInterfaces();
 
@@ -41,13 +41,13 @@ namespace Injectify.Microsoft.DependencyInjection.Helpers
             return filtered.Any();
         }
 
-        private static bool HasInterfaces2<TServiceCollection, TServiceProvider>(Type type)
+        private static bool HasInterfaces2<TServiceProvider>(Type type)
         {
             var interfaces = type.GetInterfaces();
 
             var filtered = interfaces.Where(i => i.IsGenericType);
             filtered = filtered.Where(i => i.GetGenericTypeDefinition() == typeof(IUwpApplication<>));
-            //filtered = filtered.Where(i => i.GenericTypeArguments?.FirstOrDefault() == typeof(TServiceProvider));
+            filtered = filtered.Where(i => i.GenericTypeArguments?.FirstOrDefault() == typeof(TServiceProvider)); // Check out if need ??
 
             return filtered.Any();
         }

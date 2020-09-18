@@ -25,7 +25,7 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
         public static void BootstrapStartup(this Application application)
         {
             // get startup implementation
-            var startupClass = DependencyInjectionHelper.GetStartupType<ServiceCollection, ServiceProvider>();
+            var startupClass = DependencyInjectionHelper.GetStartupType<ServiceCollection>();
 
             // create instance of the startup
             var startupInstance = Activator.CreateInstance(startupClass) as IStartup<ServiceCollection>;
