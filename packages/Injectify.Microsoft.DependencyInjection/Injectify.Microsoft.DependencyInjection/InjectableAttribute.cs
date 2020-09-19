@@ -1,13 +1,8 @@
 ﻿using Injectify.Abstractions;
-using Injectify.Microsoft.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace Injectify.Microsoft.DependencyInjection
@@ -29,39 +24,33 @@ namespace Injectify.Microsoft.DependencyInjection
         /// 
         /// </summary>
         /// <typeparam name="TPage"></typeparam>
-        /// <param name="page"></param>
-        public void Bootstrap<TPage>(TPage page)
+        /// <param name="pageInstance"></param>
+        public void Bootstrap<TPage>(TPage pageInstance)
         {
-            BootstrapProps(page);
+            BootstrapProps(pageInstance);
         }
 
-        private void BootstrapProps<T>(T page)
+        private void BootstrapProps<TPage>(TPage page)
         {
-            var propsInfo = page.GetType()
+            var injectPropsInfo = page.GetType()
                 .GetProperties()
                 .Where(pi => pi.GetCustomAttribute<InjectAttribute>() != null)
                 .ToArray();
 
-            foreach (var propInfo in propsInfo)
+            if (!injectPropsInfo.Any())
+                return;
+
+            var serviceProvider = GetServiceProviderFromApplication();
+
+            if (serviceProvider is null)
             {
-                if (propInfo.PropertyType?.GenericTypeArguments?.Any() ?? false)
-                {
-                    var serviceProvider = GetServiceProviderFromApplication();
-                    var instDemo = serviceProvider.GetServices(propInfo.PropertyType?.GenericTypeArguments?.FirstOrDefault());
-                    //var instDemo = app.Services.GetServices(propInfo.PropertyType?.GenericTypeArguments?.FirstOrDefault());
+                throw new InjectifyException($"'{nameof(serviceProvider)}' should not be null.");
+            }
 
-                    //var instDemo = (App.Current as App).Services.GetServices(propInfo.PropertyType?.GenericTypeArguments?.FirstOrDefault());
-                    propInfo.SetValue(page, instDemo);
-                }
-                else
-                {
-                    var serviceProvider = GetServiceProviderFromApplication();
-                    var instDemo = serviceProvider.GetService(propInfo.PropertyType);
-                    //var instDemo = app.Services.GetService(propInfo.PropertyType);
-
-                    //var instDemo = (App.Current as App).Services.GetService(propInfo.PropertyType);
-                    propInfo.SetValue(page, instDemo);
-                }
+            foreach (var propInfo in injectPropsInfo)
+            {
+                var inject = propInfo.GetCustomAttribute<InjectAttribute>();
+                inject.Bootstrap(page, serviceProvider, propInfo);
             }
         }
 

@@ -2,14 +2,10 @@
 using Injectify.Microsoft.DependencyInjection.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Configuration;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace Injectify.Microsoft.DependencyInjection.Extensions
 {
@@ -18,6 +14,26 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
     /// </summary>
     public static class ApplicationExtentions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns></returns>
+        public static Frame GetRootFrame(this Application application)
+        {
+            BootstrapStartup(application);
+
+            var serviceProviderPropInfo = application.GetType()
+                .GetProperties()
+                .Where(p => p.PropertyType == typeof(ServiceProvider))
+                .FirstOrDefault();
+
+            var serviceProvider = serviceProviderPropInfo.GetValue(application) as ServiceProvider;
+            var frame = new FrameWithServiceProvider<ServiceProvider>(serviceProvider) as Frame;
+
+            return frame;
+        }
+
         /// <summary>
         /// Bootstrap startup for the UWP app.
         /// </summary>

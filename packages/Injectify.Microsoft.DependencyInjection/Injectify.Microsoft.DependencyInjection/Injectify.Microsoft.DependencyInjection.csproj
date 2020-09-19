@@ -137,9 +137,11 @@
   <ItemGroup>
     <Compile Include="Extensions\ApplicationExtentions.cs" />
     <Compile Include="Extensions\Bootstraper.cs" />
+    <Compile Include="FrameWithServiceProvider.cs" />
     <Compile Include="Helpers\DependencyInjectionHelper.cs" />
     <Compile Include="InjectableAttribute.cs" />
     <Compile Include="InjectAttribute.cs" />
+    <Compile Include="InjectifyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UwpApplicationBootstrapAttribute.cs" />
     <EmbeddedResource Include="Properties\Injectify.Microsoft.DependencyInjection.rd.xml" />

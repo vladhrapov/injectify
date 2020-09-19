@@ -1,11 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using System.Reflection;
 using Windows.UI.Xaml.Controls;
 
 namespace Injectify.Microsoft.DependencyInjection.Extensions
@@ -29,17 +22,17 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
             classInjectable.Bootstrap(page);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="page"></param>
-        public static void Bootstrap<T>(T page)
-        {
-            //BootstrapApp();
-            var classInjectable = page.GetType().GetCustomAttribute<InjectableAttribute>();
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="page"></param>
+        //public static void Bootstrap<T>(T type)
+        //{
+        //    //BootstrapApp();
+        //    var classInjectable = type.GetType().GetCustomAttribute<InjectableAttribute>();
 
-            classInjectable.Bootstrap(page);
-        }
+        //    classInjectable.Bootstrap(page);
+        //}
     }
 }

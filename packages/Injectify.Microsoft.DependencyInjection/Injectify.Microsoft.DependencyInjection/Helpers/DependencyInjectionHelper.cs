@@ -1,12 +1,7 @@
 ﻿using Injectify.Abstractions;
-using Injectify.Microsoft.DependencyInjection.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Injectify.Microsoft.DependencyInjection.Helpers
 {
