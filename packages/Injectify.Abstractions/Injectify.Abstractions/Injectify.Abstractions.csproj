@@ -5,6 +5,7 @@
     <Version>0.2.0</Version>
     <Company>-</Company>
     <Product>Injectify.Abstractions</Product>
+    <Description>Dependency injection and startup abstractions for UWP applications.</Description>
     <Authors>Vladyslav Khrapov</Authors>
     <RepositoryUrl>https://github.com/vladhrapov/uwp-dependency-injection</RepositoryUrl>
     <AssemblyVersion>0.1.0.0</AssemblyVersion>
