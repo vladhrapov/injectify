@@ -15,8 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="Helpers\" />
+    <PackageReference Include="Injectify.Abstractions" Version="[0.3.0]" />
   </ItemGroup>
 
 </Project>
