@@ -5,11 +5,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Injectify.Microsoft.DependencyInjection
 {
-    internal interface IFrameWithServiceProvider
-    {
-
-    }
-
     internal class FrameWithServiceProvider<TServiceProvider> : Frame
         where TServiceProvider : class
     {

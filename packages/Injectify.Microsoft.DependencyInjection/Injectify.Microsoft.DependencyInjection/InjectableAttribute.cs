@@ -1,4 +1,6 @@
 ﻿using Injectify.Abstractions;
+using Injectify.Exceptions;
+using Injectify.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -16,18 +18,12 @@ namespace Injectify.Microsoft.DependencyInjection
         /// <summary>
         /// 
         /// </summary>
-        public InjectableAttribute()
-        {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <typeparam name="TPage"></typeparam>
         /// <param name="pageInstance"></param>
         public void Bootstrap<TPage>(TPage pageInstance)
         {
             BootstrapProps(pageInstance);
+            BootstrapConstructorParams(pageInstance);
         }
 
         private void BootstrapProps<TPage>(TPage page)
@@ -40,7 +36,7 @@ namespace Injectify.Microsoft.DependencyInjection
             if (!injectPropsInfo.Any())
                 return;
 
-            var serviceProvider = GetServiceProviderFromApplication();
+            var serviceProvider = IntrospectionHelper.GetServiceProviderFromApplication<ServiceProvider>(Application.Current);
 
             if (serviceProvider is null)
             {
@@ -54,34 +50,9 @@ namespace Injectify.Microsoft.DependencyInjection
             }
         }
 
-        private ServiceProvider GetServiceProviderFromApplication()
+        private void BootstrapConstructorParams<TPage>(TPage page)
         {
-            var classes = Assembly.GetEntryAssembly()
-                .GetTypes();
-            var classesAll = classes
-                .Where(type => type.IsClass == true && HasInterfaces(type));
-
-            var applicationClass = classesAll
-                .FirstOrDefault();
-
-            var servicesProperties = applicationClass.GetProperties().Where(pi => pi.PropertyType == typeof(ServiceProvider));
-            var servicesProperty = servicesProperties.FirstOrDefault();
-
-            //servicesProperty.SetValue(applicationClass, new Startup().Services);
-
-            var val = servicesProperty.GetValue(Application.Current);
-            return val as ServiceProvider;
-        }
-
-        private bool HasInterfaces(Type type)
-        {
-            var interfaces = type.GetInterfaces();
-
-            var filtered = interfaces.Where(i => i.IsGenericType);
-            filtered = filtered.Where(i => i.GetGenericTypeDefinition() == typeof(IUwpApplication<>));
-            filtered = filtered.Where(i => i.GenericTypeArguments?.FirstOrDefault() == typeof(ServiceProvider));
-
-            return filtered.Any();
+            // ToDo: Implement
         }
     }
 }

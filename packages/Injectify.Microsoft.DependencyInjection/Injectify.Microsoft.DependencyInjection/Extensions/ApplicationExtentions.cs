@@ -1,5 +1,6 @@
 ﻿using Injectify.Abstractions;
-using Injectify.Microsoft.DependencyInjection.Helpers;
+using Injectify.Exceptions;
+using Injectify.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
@@ -28,6 +29,11 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
                 .Where(p => p.PropertyType == typeof(ServiceProvider))
                 .FirstOrDefault();
 
+            if (serviceProviderPropInfo is null)
+            {
+                throw new InjectifyException($"App type does not implement {typeof(IUwpApplication<>)}");
+            }
+
             var serviceProvider = serviceProviderPropInfo.GetValue(application) as ServiceProvider;
             var frame = new FrameWithServiceProvider<ServiceProvider>(serviceProvider) as Frame;
 
@@ -41,20 +47,18 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
         public static void BootstrapStartup(this Application application)
         {
             // get startup implementation
-            var startupClass = DependencyInjectionHelper.GetStartupType<ServiceCollection>();
+            var startupClass = IntrospectionHelper.GetStartupType<ServiceCollection>();
 
             // create instance of the startup
             var startupInstance = Activator.CreateInstance(startupClass) as IStartup<ServiceCollection>;
 
             // set up configured service provider
-            //this.Services = ((object)st.Services) as ServiceProvider;
-
             application.BootstrapApp(startupInstance);
         }
 
         private static void BootstrapApp(this Application application, IStartup<ServiceCollection> startup)
         {
-            var appClass = DependencyInjectionHelper.GetAppType<ServiceCollection, ServiceProvider>();
+            var appClass = IntrospectionHelper.GetAppType<ServiceCollection, ServiceProvider>();
 
             var bootAttribute = appClass?.GetCustomAttribute<UwpApplicationBootstrapAttribute>();
 

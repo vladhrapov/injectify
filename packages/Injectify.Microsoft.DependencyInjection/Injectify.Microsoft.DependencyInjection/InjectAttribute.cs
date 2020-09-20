@@ -13,13 +13,6 @@ namespace Injectify.Microsoft.DependencyInjection
     public sealed class InjectAttribute : Attribute, IInject
     {
         /// <summary>
-        /// Marks property of the class for injection.
-        /// </summary>
-        public InjectAttribute()
-        {
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <typeparam name="TPage"></typeparam>
