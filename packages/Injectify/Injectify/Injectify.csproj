@@ -4,8 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Version>0.3.0</Version>
     <Company>-</Company>
-    <Product>Injectify.Abstractions</Product>
-    <Description>Dependency injection and startup abstractions for UWP applications.</Description>
+    <Product>Injectify</Product>
+    <Description>Dependency injection and startup common implementations and helpers for UWP applications.</Description>
     <Authors>Vladyslav Khrapov</Authors>
     <RepositoryUrl>https://github.com/vladhrapov/uwp-dependency-injection</RepositoryUrl>
     <AssemblyVersion>0.3.0.0</AssemblyVersion>
@@ -13,5 +13,9 @@
     <PackageTags>UWP; DI; Dependency Injection;</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Injectify.Abstractions" Version="[0.3.0]" />
+  </ItemGroup>
 
 </Project>

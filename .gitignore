@@ -8,3 +8,4 @@ packages/**/packages
 
 # Files
 *.suo
+*.nupkg

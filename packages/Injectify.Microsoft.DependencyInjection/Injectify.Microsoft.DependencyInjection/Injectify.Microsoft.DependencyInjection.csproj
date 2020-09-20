@@ -2,13 +2,14 @@
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Version>0.1.0</Version>
+    <Version>0.3.0</Version>
     <Company>-</Company>
     <Product>Injectify.Microsoft.DependencyInjection</Product>
     <Authors>Vladyslav Khrapov</Authors>
+    <Description>Injectify implementation using Microsoft.Extensions.DependencyInjection package.</Description>
     <RepositoryUrl>https://github.com/vladhrapov/uwp-dependency-injection</RepositoryUrl>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
-    <FileVersion>0.1.0.0</FileVersion>
+    <AssemblyVersion>0.3.0.0</AssemblyVersion>
+    <FileVersion>0.3.0.0</FileVersion>
     <PackageTags>UWP; DI; Dependency Injection;</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <!--<TargetFramework>net472</TargetFramework>
@@ -136,8 +137,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Extensions\ApplicationExtentions.cs" />
-    <Compile Include="Extensions\Bootstrap.cs" />
-    <Compile Include="Helpers\DependencyInjectionHelper.cs" />
+    <Compile Include="Extensions\Bootstraper.cs" />
+    <Compile Include="FrameWithServiceProvider.cs" />
     <Compile Include="InjectableAttribute.cs" />
     <Compile Include="InjectAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -145,17 +146,17 @@
     <EmbeddedResource Include="Properties\Injectify.Microsoft.DependencyInjection.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Injectify.Abstractions">
-      <Version>0.2.0</Version>
+    <PackageReference Include="Injectify">
+      <Version>[0.3.0]</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection">
-      <Version>3.1.7</Version>
+      <Version>3.0.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
-      <Version>3.1.7</Version>
+      <Version>3.0.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.10</Version>
+      <Version>6.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

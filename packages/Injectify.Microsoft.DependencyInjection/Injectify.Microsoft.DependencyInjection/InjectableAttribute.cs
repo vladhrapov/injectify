@@ -1,13 +1,10 @@
 ﻿using Injectify.Abstractions;
-using Injectify.Microsoft.DependencyInjection.Extensions;
+using Injectify.Exceptions;
+using Injectify.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
 namespace Injectify.Microsoft.DependencyInjection
@@ -21,78 +18,41 @@ namespace Injectify.Microsoft.DependencyInjection
         /// <summary>
         /// 
         /// </summary>
-        public InjectableAttribute()
-        {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <typeparam name="TPage"></typeparam>
-        /// <param name="page"></param>
-        public void Bootstrap<TPage>(TPage page)
+        /// <param name="pageInstance"></param>
+        public void Bootstrap<TPage>(TPage pageInstance)
         {
-            BootstrapProps(page);
+            BootstrapProps(pageInstance);
+            BootstrapConstructorParams(pageInstance);
         }
 
-        private void BootstrapProps<T>(T page)
+        private void BootstrapProps<TPage>(TPage page)
         {
-            var propsInfo = page.GetType()
+            var injectPropsInfo = page.GetType()
                 .GetProperties()
                 .Where(pi => pi.GetCustomAttribute<InjectAttribute>() != null)
                 .ToArray();
 
-            foreach (var propInfo in propsInfo)
+            if (!injectPropsInfo.Any())
+                return;
+
+            var serviceProvider = IntrospectionHelper.GetServiceProviderFromApplication<ServiceProvider>(Application.Current);
+
+            if (serviceProvider is null)
             {
-                if (propInfo.PropertyType?.GenericTypeArguments?.Any() ?? false)
-                {
-                    var serviceProvider = GetServiceProviderFromApplication();
-                    var instDemo = serviceProvider.GetServices(propInfo.PropertyType?.GenericTypeArguments?.FirstOrDefault());
-                    //var instDemo = app.Services.GetServices(propInfo.PropertyType?.GenericTypeArguments?.FirstOrDefault());
+                throw new InjectifyException($"'{nameof(serviceProvider)}' should not be null.");
+            }
 
-                    //var instDemo = (App.Current as App).Services.GetServices(propInfo.PropertyType?.GenericTypeArguments?.FirstOrDefault());
-                    propInfo.SetValue(page, instDemo);
-                }
-                else
-                {
-                    var serviceProvider = GetServiceProviderFromApplication();
-                    var instDemo = serviceProvider.GetService(propInfo.PropertyType);
-                    //var instDemo = app.Services.GetService(propInfo.PropertyType);
-
-                    //var instDemo = (App.Current as App).Services.GetService(propInfo.PropertyType);
-                    propInfo.SetValue(page, instDemo);
-                }
+            foreach (var propInfo in injectPropsInfo)
+            {
+                var inject = propInfo.GetCustomAttribute<InjectAttribute>();
+                inject.Bootstrap(page, serviceProvider, propInfo);
             }
         }
 
-        private ServiceProvider GetServiceProviderFromApplication()
+        private void BootstrapConstructorParams<TPage>(TPage page)
         {
-            var classes = Assembly.GetEntryAssembly()
-                .GetTypes();
-            var classesAll = classes
-                .Where(type => type.IsClass == true && HasInterfaces(type));
-
-            var applicationClass = classesAll
-                .FirstOrDefault();
-
-            var servicesProperties = applicationClass.GetProperties().Where(pi => pi.PropertyType == typeof(ServiceProvider));
-            var servicesProperty = servicesProperties.FirstOrDefault();
-
-            //servicesProperty.SetValue(applicationClass, new Startup().Services);
-
-            var val = servicesProperty.GetValue(Application.Current);
-            return val as ServiceProvider;
-        }
-
-        private bool HasInterfaces(Type type)
-        {
-            var interfaces = type.GetInterfaces();
-
-            var filtered = interfaces.Where(i => i.IsGenericType);
-            filtered = filtered.Where(i => i.GetGenericTypeDefinition() == typeof(IUwpApplication<>));
-            filtered = filtered.Where(i => i.GenericTypeArguments?.FirstOrDefault() == typeof(ServiceProvider));
-
-            return filtered.Any();
+            // ToDo: Implement
         }
     }
 }
