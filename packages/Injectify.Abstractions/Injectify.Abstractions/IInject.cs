@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Injectify")]
 [assembly: InternalsVisibleTo("Injectify.Microsoft.DependencyInjection")]
 
 namespace Injectify.Abstractions
