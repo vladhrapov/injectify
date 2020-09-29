@@ -64,8 +64,11 @@ Reference our [code samples](./docs/SAMPLES.md) of how to use DI using Injectify
 
 # Migration Guide
 
-In progress...
+Please follow up our migration guide [here](./docs/MIGRATION.md) if you stuck with any issue or need some guidance for migration to the higher versions.
 
 # Release Versioning
 
-In progress...
+Injectify follows synchronous updates strategy for all packages during the release. Always try to install the same versions of:
+- `Injectify.Abstractions`,
+- `Injectify`,
+- `Injectify.<di_framework>`
