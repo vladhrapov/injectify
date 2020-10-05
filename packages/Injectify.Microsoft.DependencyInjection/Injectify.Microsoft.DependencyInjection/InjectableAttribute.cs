@@ -36,19 +36,17 @@ namespace Injectify.Microsoft.DependencyInjection
 
         private void BootstrapProps<TPage>(TPage page, ServiceProvider serviceProvider)
         {
-            var injectPropsInfo = page.GetType()
-                .GetProperties()
-                .Where(pi => pi.GetCustomAttribute<InjectAttribute>() != null)
-                .ToArray();
-
-            if (!injectPropsInfo.Any())
-                return;
-
-            foreach (var propInfo in injectPropsInfo)
+            Func<ServiceProvider, PropertyInfo, object> serviceSelector = (provider, propInfo) =>
             {
-                var inject = propInfo.GetCustomAttribute<InjectAttribute>();
-                inject.Bootstrap(page, serviceProvider, propInfo);
-            }
+                if (propInfo.PropertyType?.GenericTypeArguments?.Any() ?? false)
+                {
+                    return provider.GetServices(propInfo.PropertyType?.GenericTypeArguments?.FirstOrDefault());
+                }
+
+                return provider.GetService(propInfo.PropertyType);
+            };
+
+            BootstrapHelper.BootstrapProps(page, serviceProvider, serviceSelector);
         }
 
         private void BootstrapConstructorParams<TPage>(TPage page, ServiceProvider serviceProvider)
