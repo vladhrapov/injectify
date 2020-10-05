@@ -24,6 +24,9 @@ namespace Injectify.Microsoft.DependencyInjection
             // Just do not need to bootstrap dependencies.
             if (classInjectable != null)
             {
+                if (!(e.Content is Page))
+                    throw new InvalidCastException($"'{e.Content.GetType().Name}' is not assignable to '{typeof(Page).Name}'");
+
                 classInjectable.Bootstrap(e.Content);
             }
         }

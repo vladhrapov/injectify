@@ -21,12 +21,20 @@ namespace Injectify.Microsoft.DependencyInjection
         /// <typeparam name="TPage"></typeparam>
         /// <param name="pageInstance"></param>
         public void Bootstrap<TPage>(TPage pageInstance)
+            where TPage : class
         {
-            BootstrapProps(pageInstance);
-            BootstrapConstructorParams(pageInstance);
+            var serviceProvider = IntrospectionHelper.GetServiceProviderFromApplication<ServiceProvider>(Application.Current);
+
+            if (serviceProvider is null)
+            {
+                throw new InjectifyException($"'{nameof(serviceProvider)}' should not be null.");
+            }
+
+            BootstrapProps(pageInstance, serviceProvider);
+            BootstrapConstructorParams(pageInstance, serviceProvider);
         }
 
-        private void BootstrapProps<TPage>(TPage page)
+        private void BootstrapProps<TPage>(TPage page, ServiceProvider serviceProvider)
         {
             var injectPropsInfo = page.GetType()
                 .GetProperties()
@@ -36,13 +44,6 @@ namespace Injectify.Microsoft.DependencyInjection
             if (!injectPropsInfo.Any())
                 return;
 
-            var serviceProvider = IntrospectionHelper.GetServiceProviderFromApplication<ServiceProvider>(Application.Current);
-
-            if (serviceProvider is null)
-            {
-                throw new InjectifyException($"'{nameof(serviceProvider)}' should not be null.");
-            }
-
             foreach (var propInfo in injectPropsInfo)
             {
                 var inject = propInfo.GetCustomAttribute<InjectAttribute>();
@@ -50,9 +51,30 @@ namespace Injectify.Microsoft.DependencyInjection
             }
         }
 
-        private void BootstrapConstructorParams<TPage>(TPage page)
+        private void BootstrapConstructorParams<TPage>(TPage page, ServiceProvider serviceProvider)
+            where TPage : class
         {
-            // ToDo: Implement
+            Func<ServiceProvider, ParameterInfo, object> serviceSelector = (provider, parameterInfo) =>
+            {
+                if (parameterInfo.ParameterType?.GenericTypeArguments?.Any() ?? false)
+                {
+                    return provider.GetServices(parameterInfo.ParameterType?.GenericTypeArguments?.FirstOrDefault());
+                }
+
+                return provider.GetService(parameterInfo.ParameterType);
+            };
+
+            // UWP does not support instantiation of the page using constructor with any parameters.
+            // This is a current limitation of the framework and it's internal implementation
+            // of the page factory that creates page instances internally suring frame navigation
+            // by using default constructor with no parameters.
+            //
+            // OnInit is a workaround for injecting dependencies as parameters similar to constructor.
+            //
+            // Proposal to use navigation with extended frame navigation:
+            // https://github.com/microsoft/microsoft-ui-xaml/issues/693
+            //
+            BootstrapHelper.BootstrapInitParams(page, serviceProvider, serviceSelector);
         }
     }
 }
