@@ -15,6 +15,7 @@ namespace Injectify.Abstractions
         /// </summary>
         /// <typeparam name="TPage">Page type.</typeparam>
         /// <param name="page">UWP page instance.</param>
-        void Bootstrap<TPage>(TPage page);
+        void Bootstrap<TPage>(TPage page)
+            where TPage : class;
     }
 }
