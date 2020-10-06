@@ -24,17 +24,19 @@ namespace Injectify.Microsoft.DependencyInjection
             where TPage : class
         {
             var serviceProvider = IntrospectionHelper.GetServiceProviderFromApplication<ServiceProvider>(Application.Current);
+            var context = new InjectionContext<TPage, ServiceProvider>(pageInstance, serviceProvider);
 
             if (serviceProvider is null)
             {
                 throw new InjectifyException($"'{nameof(serviceProvider)}' should not be null.");
             }
 
-            BootstrapProps(pageInstance, serviceProvider);
-            BootstrapConstructorParams(pageInstance, serviceProvider);
+            BootstrapProps(context);
+            BootstrapConstructorParams(context);
         }
 
-        private void BootstrapProps<TPage>(TPage page, ServiceProvider serviceProvider)
+        private void BootstrapProps<TPage>(InjectionContext<TPage, ServiceProvider> context)
+            where TPage : class
         {
             Func<ServiceProvider, PropertyInfo, object> serviceSelector = (provider, propInfo) =>
             {
@@ -46,10 +48,10 @@ namespace Injectify.Microsoft.DependencyInjection
                 return provider.GetService(propInfo.PropertyType);
             };
 
-            BootstrapHelper.BootstrapProps(page, serviceProvider, serviceSelector);
+            BootstrapHelper.BootstrapProps(context, serviceSelector);
         }
 
-        private void BootstrapConstructorParams<TPage>(TPage page, ServiceProvider serviceProvider)
+        private void BootstrapConstructorParams<TPage>(InjectionContext<TPage, ServiceProvider> context)
             where TPage : class
         {
             Func<ServiceProvider, ParameterInfo, object> serviceSelector = (provider, parameterInfo) =>
@@ -72,7 +74,7 @@ namespace Injectify.Microsoft.DependencyInjection
             // Proposal to use navigation with extended frame navigation:
             // https://github.com/microsoft/microsoft-ui-xaml/issues/693
             //
-            BootstrapHelper.BootstrapInitParams(page, serviceProvider, serviceSelector);
+            BootstrapHelper.BootstrapInitParams(context, serviceSelector);
         }
     }
 }
