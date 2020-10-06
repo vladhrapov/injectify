@@ -1,9 +1,6 @@
 ﻿using Injectify.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Injectify.Annotations
 {
@@ -20,13 +17,10 @@ namespace Injectify.Annotations
         /// <typeparam name="TServiceProvider"></typeparam>
         /// <param name="context"></param>
         /// <param name="propInfo"></param>
-        /// <param name="serviceSelector"></param>
-        public void Bootstrap<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context,
-            PropertyInfo propInfo,
-            Func<TServiceProvider, PropertyInfo, object> serviceSelector)
-                where TPage : class
+        public void Bootstrap<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context, PropertyInfo propInfo)
+            where TPage : class
         {
-            var propertyInstance = serviceSelector(context.ServiceProvider, propInfo);
+            var propertyInstance = context.GetByPropertyInfo(context.ServiceProvider, propInfo);
             propInfo.SetValue(context.Page, propertyInstance);
         }
     }

@@ -1,6 +1,5 @@
 ﻿using Injectify.Abstractions;
 using Injectify.Annotations;
-using System;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -11,9 +10,8 @@ namespace Injectify.Helpers
 {
     internal sealed class BootstrapHelper
     {
-        public static void BootstrapProps<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context,
-            Func<TServiceProvider, PropertyInfo, object> serviceSelector)
-                where TPage : class
+        public static void BootstrapProps<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context)
+            where TPage : class
         {
             var injectPropsInfo = context.Page
                 .GetType()
@@ -27,13 +25,12 @@ namespace Injectify.Helpers
             foreach (var propInfo in injectPropsInfo)
             {
                 var inject = propInfo.GetCustomAttribute<InjectAttribute>();
-                inject.Bootstrap(context, propInfo, serviceSelector);
+                inject.Bootstrap(context, propInfo);
             }
         }
 
-        public static void BootstrapInitParams<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context,
-            Func<TServiceProvider, ParameterInfo,  object> serviceSelector)
-                where TPage : class
+        public static void BootstrapInitParams<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context)
+            where TPage : class
         {
             var onInitMethodInfo = IntrospectionHelper.GetOnInitMethod(context.Page);
             var onInitMethod = onInitMethodInfo?.GetCustomAttribute<OnInitAttribute>();
@@ -43,7 +40,7 @@ namespace Injectify.Helpers
                 return;
             }
 
-            onInitMethod.Bootstrap(context, onInitMethodInfo, serviceSelector);
+            onInitMethod.Bootstrap(context, onInitMethodInfo);
         }
     }
 }
