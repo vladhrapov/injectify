@@ -1,4 +1,5 @@
-﻿using Injectify.Annotations;
+﻿using Injectify.Abstractions;
+using Injectify.Annotations;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -10,11 +11,12 @@ namespace Injectify.Helpers
 {
     internal sealed class BootstrapHelper
     {
-        public static void BootstrapProps<TPage, TServiceProvider>(TPage page,
-            TServiceProvider serviceProvider,
+        public static void BootstrapProps<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context,
             Func<TServiceProvider, PropertyInfo, object> serviceSelector)
+                where TPage : class
         {
-            var injectPropsInfo = page.GetType()
+            var injectPropsInfo = context.Page
+                .GetType()
                 .GetProperties()
                 .Where(pi => pi.GetCustomAttribute<InjectAttribute>() != null)
                 .ToArray();
@@ -25,16 +27,15 @@ namespace Injectify.Helpers
             foreach (var propInfo in injectPropsInfo)
             {
                 var inject = propInfo.GetCustomAttribute<InjectAttribute>();
-                inject.Bootstrap(page, propInfo, serviceProvider, serviceSelector);
+                inject.Bootstrap(context, propInfo, serviceSelector);
             }
         }
 
-        public static void BootstrapInitParams<TPage, TServiceProvider>(TPage page,
-            TServiceProvider serviceProvider,
+        public static void BootstrapInitParams<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context,
             Func<TServiceProvider, ParameterInfo,  object> serviceSelector)
                 where TPage : class
         {
-            var onInitMethodInfo = IntrospectionHelper.GetOnInitMethod(page);
+            var onInitMethodInfo = IntrospectionHelper.GetOnInitMethod(context.Page);
             var onInitMethod = onInitMethodInfo?.GetCustomAttribute<OnInitAttribute>();
 
             if (onInitMethod is null)
@@ -42,7 +43,7 @@ namespace Injectify.Helpers
                 return;
             }
 
-            onInitMethod.Bootstrap(page, onInitMethodInfo, serviceProvider, serviceSelector);
+            onInitMethod.Bootstrap(context, onInitMethodInfo, serviceSelector);
         }
     }
 }
