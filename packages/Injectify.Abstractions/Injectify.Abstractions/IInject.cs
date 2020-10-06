@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Injectify")]
@@ -19,10 +18,7 @@ namespace Injectify.Abstractions
         /// <typeparam name="TServiceProvider"></typeparam>
         /// <param name="context"></param>
         /// <param name="propInfo"></param>
-        /// <param name="serviceSelector"></param>
-        void Bootstrap<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context,
-            PropertyInfo propInfo,
-            Func<TServiceProvider, PropertyInfo, object> serviceSelector)
-                where TPage : class;
+        void Bootstrap<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context, PropertyInfo propInfo)
+            where TPage : class;
     }
 }
