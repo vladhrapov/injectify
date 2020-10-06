@@ -17,13 +17,12 @@ namespace Injectify.Abstractions
         /// </summary>
         /// <typeparam name="TPage"></typeparam>
         /// <typeparam name="TServiceProvider"></typeparam>
-        /// <param name="page"></param>
+        /// <param name="context"></param>
         /// <param name="propInfo"></param>
-        /// <param name="serviceProvider"></param>
         /// <param name="serviceSelector"></param>
-        void Bootstrap<TPage, TServiceProvider>(TPage page,
+        void Bootstrap<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context,
             PropertyInfo propInfo,
-            TServiceProvider serviceProvider,
-            Func<TServiceProvider, PropertyInfo, object> serviceSelector);
+            Func<TServiceProvider, PropertyInfo, object> serviceSelector)
+                where TPage : class;
     }
 }

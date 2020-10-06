@@ -7,11 +7,21 @@ using System.Runtime.CompilerServices;
 
 namespace Injectify.Abstractions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     internal interface IOnInit
     {
-        void Bootstrap<TPage, TServiceProvider>(TPage page,
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TPage"></typeparam>
+        /// <typeparam name="TServiceProvider"></typeparam>
+        /// <param name="context"></param>
+        /// <param name="initMethodInfo"></param>
+        /// <param name="serviceSelector"></param>
+        void Bootstrap<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context,
             MethodInfo initMethodInfo,
-            TServiceProvider serviceProvider,
             Func<TServiceProvider, ParameterInfo, object> serviceSelector)
                 where TPage : class;
     }
