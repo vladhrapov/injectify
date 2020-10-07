@@ -1,5 +1,8 @@
 ﻿using Injectify.Abstractions;
+using Injectify.Annotations;
+using Injectify.Exceptions;
 using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -19,6 +22,7 @@ namespace Injectify.Helpers
         /// <typeparam name="TServiceCollection"></typeparam>
         /// <typeparam name="TServiceProvider"></typeparam>
         /// <returns></returns>
+        [Pure]
         public static Type GetAppType<TServiceCollection, TServiceProvider>()
             where TServiceCollection : class
             where TServiceProvider : class =>
@@ -31,6 +35,7 @@ namespace Injectify.Helpers
         /// </summary>
         /// <typeparam name="TServiceCollection"></typeparam>
         /// <returns></returns>
+        [Pure]
         public static Type GetStartupType<TServiceCollection>()
             where TServiceCollection : class =>
                 Assembly.GetEntryAssembly().GetTypes()
@@ -55,6 +60,22 @@ namespace Injectify.Helpers
                 .FirstOrDefault();
 
             return servicesProperty.GetValue(applicationInstance) as TServiceProvider;
+        }
+
+        public static MethodInfo GetOnInitMethod<TPage>(TPage page)
+            where TPage : class
+        {
+            var onInitMethods = page.GetType()
+                .GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
+                .Where(mi => mi.GetCustomAttribute<OnInitAttribute>() != null)
+                .ToArray();
+
+            if (onInitMethods.Length > 1)
+            {
+                throw new InjectifyException("Only one method with OnInit annotation is allowed.");
+            }
+
+            return onInitMethods.FirstOrDefault();
         }
 
         /// <summary>

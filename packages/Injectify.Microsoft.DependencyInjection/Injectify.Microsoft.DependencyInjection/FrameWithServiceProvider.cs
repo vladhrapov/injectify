@@ -1,16 +1,19 @@
-﻿using System;
+﻿using Injectify.Abstractions;
+using Injectify.Annotations;
+using Injectify.Microsoft.DependencyInjection.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Reflection;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 namespace Injectify.Microsoft.DependencyInjection
 {
-    internal class FrameWithServiceProvider<TServiceProvider> : Frame
-        where TServiceProvider : class
+    internal class FrameWithServiceProvider : Frame
     {
-        private readonly TServiceProvider _serviceProvider;
+        private readonly ServiceProvider _serviceProvider;
 
-        public FrameWithServiceProvider(TServiceProvider serviceProvider)
+        public FrameWithServiceProvider(ServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             this.Navigated += OnFrameNavigated;
@@ -24,7 +27,16 @@ namespace Injectify.Microsoft.DependencyInjection
             // Just do not need to bootstrap dependencies.
             if (classInjectable != null)
             {
-                classInjectable.Bootstrap(e.Content);
+                if (!(e.Content is Page))
+                    throw new InvalidCastException($"'{e.Content.GetType().Name}' is not assignable to '{typeof(Page).Name}'");
+
+                //var serviceProvider = IntrospectionHelper.GetServiceProviderFromApplication<ServiceProvider>(Application.Current);
+                var context = new InjectionContext<Page, ServiceProvider>(e.Content as Page,
+                    _serviceProvider,
+                    ServiceProviderExtensions.GetByPropertyInfo,
+                    ServiceProviderExtensions.GetByParameterInfo);
+
+                classInjectable.Bootstrap(context);
             }
         }
     }

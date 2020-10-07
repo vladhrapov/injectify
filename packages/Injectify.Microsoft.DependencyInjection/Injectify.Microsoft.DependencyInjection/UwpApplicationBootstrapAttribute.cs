@@ -14,13 +14,6 @@ namespace Injectify.Microsoft.DependencyInjection
     public sealed class UwpApplicationBootstrapAttribute : Attribute
     {
         /// <summary>
-        /// 
-        /// </summary>
-        public UwpApplicationBootstrapAttribute()
-        {
-        }
-
-        /// <summary>
         /// Bootstrap application marked by UwpApplicationBootstrap.
         /// </summary>
         /// <param name="application"></param>

@@ -1,7 +1,7 @@
 ﻿using Injectify.Microsoft.DependencyInjection;
-using Injectify.Microsoft.DependencyInjection.Extensions;
 using SampleAppV0.Services;
 using System.Collections.Generic;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace SampleAppV0
@@ -12,7 +12,6 @@ namespace SampleAppV0
     {
         public MainPage()
         {
-            Bootstraper.Bootstrap(this); // Run bootstrap for current page
             this.InitializeComponent();
         }
 
@@ -23,5 +22,10 @@ namespace SampleAppV0
         // Mark property with Inject
         [Inject]
         public IEnumerable<IProvider> Providers { get; set; }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(SomePage));
+        }
     }
 }

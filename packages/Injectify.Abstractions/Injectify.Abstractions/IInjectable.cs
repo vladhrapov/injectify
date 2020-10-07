@@ -14,7 +14,9 @@ namespace Injectify.Abstractions
         /// Bootstrap class members marked using Inject attribute.
         /// </summary>
         /// <typeparam name="TPage">Page type.</typeparam>
-        /// <param name="page">UWP page instance.</param>
-        void Bootstrap<TPage>(TPage page);
+        /// <typeparam name="TServiceProvider">Service provider type.</typeparam>
+        /// <param name="context">Injection context for the page, including service provider with registered services and service selectors.</param>
+        void Bootstrap<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context)
+            where TPage : class;
     }
 }

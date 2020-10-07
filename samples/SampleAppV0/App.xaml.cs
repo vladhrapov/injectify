@@ -19,7 +19,6 @@ namespace SampleAppV0
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            this.BootstrapStartup(); // Run Startup Bootstrap
         }
 
         public ServiceProvider Services { get; set; }
@@ -30,7 +29,7 @@ namespace SampleAppV0
 
             if (rootFrame == null)
             {
-                rootFrame = new Frame();
+                rootFrame = this.GetRootFrame(); // Get frame with providers
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 

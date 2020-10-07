@@ -35,7 +35,7 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
             }
 
             var serviceProvider = serviceProviderPropInfo.GetValue(application) as ServiceProvider;
-            var frame = new FrameWithServiceProvider<ServiceProvider>(serviceProvider) as Frame;
+            var frame = new FrameWithServiceProvider(serviceProvider) as Frame;
 
             return frame;
         }

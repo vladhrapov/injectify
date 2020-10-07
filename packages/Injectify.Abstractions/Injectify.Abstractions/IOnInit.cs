@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 namespace Injectify.Abstractions
 {
     /// <summary>
-    /// Annotates member for injection of the specified dependency type.
+    /// 
     /// </summary>
-    internal interface IInject
+    internal interface IOnInit
     {
         /// <summary>
         /// 
@@ -17,8 +17,8 @@ namespace Injectify.Abstractions
         /// <typeparam name="TPage"></typeparam>
         /// <typeparam name="TServiceProvider"></typeparam>
         /// <param name="context"></param>
-        /// <param name="propInfo"></param>
-        void Bootstrap<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context, PropertyInfo propInfo)
+        /// <param name="methodInfo"></param>
+        void Bootstrap<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context, MethodInfo methodInfo)
             where TPage : class;
     }
 }
