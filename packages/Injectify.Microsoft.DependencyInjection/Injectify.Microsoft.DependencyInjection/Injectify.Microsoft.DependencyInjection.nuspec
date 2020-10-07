@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Injectify.Microsoft.DependencyInjection</id>
-    <version>0.3.0</version>
+    <version>0.4.0</version>
     <title>Injectify.Microsoft.DependencyInjection</title>
     <authors>Vladyslav Khrapov</authors>
     <owners>Vladyslav Khrapov</owners>
@@ -15,8 +15,8 @@
     <tags>UWP; DI; Dependency Injection</tags>
     <dependencies>
       <!-- <group targetFramework=".NETFramework4.7.2" /> -->
-      <dependency id="Injectify" version="0.3.0" />
-      <dependency id="Injectify.Abstractions" version="0.3.0" />
+      <dependency id="Injectify" version="0.4.0" />
+      <dependency id="Injectify.Abstractions" version="0.4.0" />
       <dependency id="Microsoft.Extensions.DependencyInjection" version="3.1.7" />
       <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="3.1.7" />
       <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.2.10" /> 
