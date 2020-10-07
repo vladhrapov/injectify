@@ -1,4 +1,36 @@
 # Change Log\n\nAll notable changes to this project will be documented in this file. See [versionize](https://github.com/saintedlama/versionize) for commit guidelines.\n
+<a name="0.4.0"></a>
+## 0.4.0 (2020-10-7)
+
+### Bug Fixes
+
+* add dependencies to Injectify.Microsoft.DependencyInjection nuspec package metadata
+
+### Features
+
+* use InjectionContext from abstractions for common codebase, add service provider selectors as extensions, move InjectableAttribute to Injectify package
+* simplify internal annotations API, replace a bunch of parameters with InjectionContext, move InjectableAttribute to Injectify package as a common code
+* simplify internal abstraction method parameters using service selectors in scope of InjectionContext model
+* extract InjectAttribute common logic and move it to Injectify package
+* move common implementation of the InjectAttribute from Injectify.Microsoft.DependencyInjection to the Injectify package
+* add DI framework agnostic service selector implementation as a passed in parameter
+* add bootstrap for OnInit, handle multiple OnInit annotations and page cast
+* add onInit common implementation, introspection of marked methods using OnInit annotation
+* add IOnInit contract, add IInjectable page constraint to be referency type
+* add migration guide, release versioning docs
+* update docs, add quick start, folder structure and initial docs for migration and samples
+* add usage sample of 0.3.0 version
+
+### Other
+
+* bump Injectify.Microsoft.DependencyInjection to v0.4.0
+* remove moved annotations references, add reference to service provider extensions
+* update bootstrap API methods using InjectionContext model wrapper
+* wrap up parameters using InjectionContext model
+* update internal parameters API
+* mark Bootstrap as obsolete
+* Merge pull request #2 from vladhrapov/release/0.3.0
+
 <a name="0.3.0"></a>
 ## 0.3.0 (2020-9-20)
 
