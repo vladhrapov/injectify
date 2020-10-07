@@ -8,8 +8,8 @@
     <Description>Dependency injection and startup abstractions for UWP applications.</Description>
     <Authors>Vladyslav Khrapov</Authors>
     <RepositoryUrl>https://github.com/vladhrapov/uwp-dependency-injection</RepositoryUrl>
-    <AssemblyVersion>0.3.0.0</AssemblyVersion>
-    <FileVersion>0.3.0.0</FileVersion>
+    <AssemblyVersion>0.4.0.0</AssemblyVersion>
+    <FileVersion>0.4.0.0</FileVersion>
     <PackageTags>UWP; DI; Dependency Injection;</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
