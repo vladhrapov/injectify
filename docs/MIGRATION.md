@@ -6,60 +6,6 @@ Here you can find detailed information regarding version changes of 0.x.x versio
 
 ## Version 0.3.0
 
-Simplified DI bootstrap for page components.
-
-**Before:**
-
-```
-using Injectify.Microsoft.DependencyInjection;
-using Injectify.Microsoft.DependencyInjection.Extensions;
-
-
-// Mark class as Injectable
-[Injectable]
-public sealed partial class MainPage : Page
-{
-    public MainPage()
-    {
-        Bootstraper.Bootstrap(this); // Run bootstrap for current page
-        this.InitializeComponent();
-    }
-
-    // Mark property with Inject
-    [Inject]
-    public ISampleService SampleService { get; set; }
-
-    // Mark property with Inject, multiple registered dependencies
-    [Inject]
-    public IEnumerable<IProvider> Providers { get; set; }
-}
-```
-
-**After:**
-
-```
-using Injectify.Microsoft.DependencyInjection;
-
-// Mark class as Injectable
-[Injectable]
-public sealed partial class MainPage : Page
-{
-    public MainPage()
-    {
-        // [1] Bootstrap was removed
-        this.InitializeComponent();
-    }
-
-    // Mark property with Inject
-    [Inject]
-    public ISampleService SampleService { get; set; }
-
-    // Mark property with Inject, multiple registered dependencies
-    [Inject]
-    public IEnumerable<IProvider> Providers { get; set; }
-}
-```
-
 Simplified DI bootstrap for `App` component, add `Frame` root provider for injecting dependencies smoothly and silently using `GetRootFrame` extension during page navigation.
 
 **Before:**
