@@ -1,4 +1,20 @@
 # Change Log\n\nAll notable changes to this project will be documented in this file. See [versionize](https://github.com/saintedlama/versionize) for commit guidelines.\n
+<a name="0.4.2"></a>
+## 0.4.2 (2020-10-10)
+
+### Bug Fixes
+
+* fix package cross references
+
+### Features
+
+* add sample for usage of the v0.4.*
+
+### Other
+
+* update dependencies
+* Merge pull request #4 from vladhrapov/release/0.4.1
+
 <a name="0.4.1"></a>
 ## 0.4.1 (2020-10-9)
 
