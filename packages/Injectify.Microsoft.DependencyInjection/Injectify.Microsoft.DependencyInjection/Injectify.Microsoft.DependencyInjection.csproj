@@ -147,7 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Injectify">
-      <Version>[0.4.0]</Version>
+      <Version>[0.4.1]</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection">
       <Version>3.0.0</Version>
