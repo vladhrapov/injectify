@@ -1,4 +1,22 @@
 # Change Log\n\nAll notable changes to this project will be documented in this file. See [versionize](https://github.com/saintedlama/versionize) for commit guidelines.\n
+<a name="0.4.1"></a>
+## 0.4.1 (2020-10-9)
+
+### Bug Fixes
+
+* handle NullReferenceException when class was not marked as Injectable, but Bootstrap was called
+
+### Other
+
+* update to v0.4.1 version additional annotations
+* update github repository url and tags
+* update migration info for v0.4.0
+* fix typo of the bootstrapper name
+* remove nuget.exe
+* update migration guide
+* Merge pull request #3 from vladhrapov/release/0.4.0
+* bump manually the rest versions for Injectify, Injectify.Abstractions
+
 <a name="0.4.0"></a>
 ## 0.4.0 (2020-10-7)
 

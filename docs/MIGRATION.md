@@ -4,9 +4,9 @@
 
 Here you can find detailed information regarding version changes of 0.x.x versions, any new features, updates and improvements for the development usage.
 
-## Version 0.3.0
+## Version 0.4.0
 
-Simplified DI bootstrap for page components.
+Prettified DI bootstrap for page components.
 
 **Before:**
 
@@ -46,8 +46,11 @@ public sealed partial class MainPage : Page
 {
     public MainPage()
     {
-        // [1] Bootstrap was removed
+        this.Bootstrap(); // [1] Bootstrap API prettified
         this.InitializeComponent();
+
+        // Or possible
+        // this.Bootstrap().InitializeComponent();
     }
 
     // Mark property with Inject
@@ -57,8 +60,23 @@ public sealed partial class MainPage : Page
     // Mark property with Inject, multiple registered dependencies
     [Inject]
     public IEnumerable<IProvider> Providers { get; set; }
+
+    private ISampleService _sampleService;
+    private IEnumerable<IProvider> _providers;
+
+    // [2] Mark method using OnInit and pass registered dependencies
+    [OnInit]
+    public void Init(ISampleService sampleService, IEnumerable<IProvider> providers)
+    {
+        // It will be called right after properties injection
+        // and after Bootstrap method finish execution in constructor.
+        _sampleService = sampleService;
+        _providers = providers;
+    }
 }
 ```
+
+## Version 0.3.0
 
 Simplified DI bootstrap for `App` component, add `Frame` root provider for injecting dependencies smoothly and silently using `GetRootFrame` extension during page navigation.
 
