@@ -1,5 +1,6 @@
 ﻿using Injectify.Abstractions;
 using Injectify.Annotations;
+using Injectify.Exceptions;
 using Injectify.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -29,6 +30,11 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
                 serviceProvider,
                 ServiceProviderExtensions.GetByPropertyInfo,
                 ServiceProviderExtensions.GetByParameterInfo);
+
+            if (classInjectable is null)
+            {
+                throw new InjectifyException($"'{page.GetType().Name}' was not marked using '{nameof(InjectableAttribute)}'");
+            }
 
             classInjectable.Bootstrap(context);
 
