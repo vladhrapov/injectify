@@ -137,7 +137,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Extensions\ApplicationExtentions.cs" />
-    <Compile Include="Extensions\Bootstraper.cs" />
+    <Compile Include="Extensions\Bootstrapper.cs" />
     <Compile Include="Extensions\ServiceProviderExtensions.cs" />
     <Compile Include="FrameWithServiceProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
