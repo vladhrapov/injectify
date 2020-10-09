@@ -4,6 +4,78 @@
 
 Here you can find detailed information regarding version changes of 0.x.x versions, any new features, updates and improvements for the development usage.
 
+## Version 0.4.0
+
+Prettified DI bootstrap for page components.
+
+**Before:**
+
+```
+using Injectify.Microsoft.DependencyInjection;
+using Injectify.Microsoft.DependencyInjection.Extensions;
+
+
+// Mark class as Injectable
+[Injectable]
+public sealed partial class MainPage : Page
+{
+    public MainPage()
+    {
+        Bootstraper.Bootstrap(this); // Run bootstrap for current page
+        this.InitializeComponent();
+    }
+
+    // Mark property with Inject
+    [Inject]
+    public ISampleService SampleService { get; set; }
+
+    // Mark property with Inject, multiple registered dependencies
+    [Inject]
+    public IEnumerable<IProvider> Providers { get; set; }
+}
+```
+
+**After:**
+
+```
+using Injectify.Microsoft.DependencyInjection;
+
+// Mark class as Injectable
+[Injectable]
+public sealed partial class MainPage : Page
+{
+    public MainPage()
+    {
+        this.Bootstrap(); // [1] Bootstrap API prettified
+        this.InitializeComponent();
+
+        // Or possible
+        // this.Bootstrap().InitializeComponent();
+    }
+
+    // Mark property with Inject
+    [Inject]
+    public ISampleService SampleService { get; set; }
+
+    // Mark property with Inject, multiple registered dependencies
+    [Inject]
+    public IEnumerable<IProvider> Providers { get; set; }
+
+    private ISampleService _sampleService;
+    private IEnumerable<IProvider> _providers;
+
+    // [2] Mark method using OnInit and pass registered dependencies
+    [OnInit]
+    public void Init(ISampleService sampleService, IEnumerable<IProvider> providers)
+    {
+        // It will be called right after properties injection
+        // and after Bootstrap method finish execution in constructor.
+        _sampleService = sampleService;
+        _providers = providers;
+    }
+}
+```
+
 ## Version 0.3.0
 
 Simplified DI bootstrap for `App` component, add `Frame` root provider for injecting dependencies smoothly and silently using `GetRootFrame` extension during page navigation.
