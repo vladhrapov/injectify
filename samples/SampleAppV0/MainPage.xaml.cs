@@ -1,4 +1,5 @@
-﻿using Injectify.Microsoft.DependencyInjection;
+﻿using Injectify.Annotations;
+using Injectify.Microsoft.DependencyInjection.Extensions;
 using SampleAppV0.Services;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
@@ -10,9 +11,21 @@ namespace SampleAppV0
     [Injectable]
     public sealed partial class MainPage : Page
     {
+        private ISampleService _sampleService;
+        private IEnumerable<IProvider> _providers;
+
         public MainPage()
         {
-            this.InitializeComponent();
+            this.Bootstrap()
+                .InitializeComponent();
+        }
+
+        // Mark method using on init and inject dependencies for initialize
+        [OnInit]
+        private void Init(ISampleService sampleService, IEnumerable<IProvider> providers)
+        {
+            _sampleService = sampleService;
+            _providers = providers;
         }
 
         // Mark property with Inject

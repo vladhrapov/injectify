@@ -12,5 +12,6 @@
         <TextBlock FontSize="28" Margin="300,100">
             Some page loaded.
         </TextBlock>
+        <Button Width="150" Height="50" Margin="639,348,0,0" VerticalAlignment="Top" Click="Button_Click">Back to main</Button>
     </Grid>
 </Page>
