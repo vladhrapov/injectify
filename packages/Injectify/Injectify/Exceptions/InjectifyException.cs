@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
+[assembly: InternalsVisibleTo("Injectify.Autofac")]
 [assembly: InternalsVisibleTo("Injectify.Microsoft.DependencyInjection")]
 
 namespace Injectify.Exceptions

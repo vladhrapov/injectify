@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("Injectify.Autofac")]
 [assembly: InternalsVisibleTo("Injectify.Microsoft.DependencyInjection")]
 
 namespace Injectify.Helpers
