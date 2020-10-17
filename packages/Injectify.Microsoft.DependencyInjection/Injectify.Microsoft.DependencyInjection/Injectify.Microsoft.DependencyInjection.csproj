@@ -3,15 +3,15 @@
   xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Version>0.4.2</Version>
+    <Version>0.5.0</Version>
     <Company>-</Company>
     <Product>Injectify.Microsoft.DependencyInjection</Product>
     <Authors>Vladyslav Khrapov</Authors>
     <Description>Injectify implementation using Microsoft.Extensions.DependencyInjection package.</Description>
     <RepositoryUrl>https://github.com/vladhrapov/injectify</RepositoryUrl>
-    <AssemblyVersion>0.4.2.0</AssemblyVersion>
-    <FileVersion>0.4.2.0</FileVersion>
-    <PackageTags>UWP; DI; Dependency Injection; Injectify;</PackageTags>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <FileVersion>0.5.0.0</FileVersion>
+    <PackageTags>UWP; DI; DependencyInjection; Injectify;</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <!--<TargetFramework>net472</TargetFramework>
     <TargetFrameworks>net46;net461;net462;net47;net471;net472</TargetFrameworks>
@@ -147,7 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Injectify">
-      <Version>[0.4.2]</Version>
+      <Version>[0.5.0]</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection">
       <Version>3.0.0</Version>

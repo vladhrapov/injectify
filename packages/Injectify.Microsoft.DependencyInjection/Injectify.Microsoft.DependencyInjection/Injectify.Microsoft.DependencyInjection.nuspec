@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Injectify.Microsoft.DependencyInjection</id>
-    <version>0.4.2</version>
+    <version>0.5.0</version>
     <title>Injectify.Microsoft.DependencyInjection</title>
     <authors>Vladyslav Khrapov</authors>
     <owners>Vladyslav Khrapov</owners>
@@ -10,13 +10,13 @@
     <description>Injectify implementation using Microsoft.Extensions.DependencyInjection package.</description>
     <repository type="git" url="https://github.com/vladhrapov/injectify" branch="develop" />
     <!--<projectUrl>https://github.com/vladhrapov/uwp-dependency-injection</projectUrl>-->
-    <releaseNotes>Initial release</releaseNotes>
+    <releaseNotes>Release candidate versions</releaseNotes>
     <copyright>Copyright 2020</copyright>
-    <tags>UWP; DI; Dependency Injection; Injectify;</tags>
+    <tags>UWP; DI; DependencyInjection; Injectify; Microsoft.Extensions.DependencyInjection;</tags>
     <dependencies>
       <!-- <group targetFramework=".NETFramework4.7.2" /> -->
-      <dependency id="Injectify" version="0.4.2" />
-      <dependency id="Injectify.Abstractions" version="0.4.2" />
+      <dependency id="Injectify" version="0.5.0" />
+      <dependency id="Injectify.Abstractions" version="0.5.0" />
       <dependency id="Microsoft.Extensions.DependencyInjection" version="3.1.7" />
       <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="3.1.7" />
       <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.2.10" />
