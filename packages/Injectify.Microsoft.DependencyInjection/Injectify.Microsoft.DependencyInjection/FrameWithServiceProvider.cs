@@ -16,7 +16,7 @@ namespace Injectify.Microsoft.DependencyInjection
         public FrameWithServiceProvider(ServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
-            this.Navigated += OnFrameNavigated;
+            //this.Navigated += OnFrameNavigated;
         }
 
         protected virtual void OnFrameNavigated(object sender, NavigationEventArgs e)
