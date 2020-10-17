@@ -27,25 +27,17 @@ Injectify is a useful tool for building robust, resilient bridge between a DI fr
 
 # Quick start
 
-Install package with abstractions:
+Install package with a DI dependent framework (other common packages like `Injectify.Abstractions` and `Injectify` will be installed as peer dependencies under the hood). For the versions lower than `0.4.0` please [reference](./docs/QUICK_START.md) the detailed guide.
+
+## List of available packages
+
+Microsoft.Extensions.DependencyInjection:
 
 ```
-dotnet add package Injectify.Abstractions
+dotnet add package Injectify.Microsoft.DependencyInjection
 ```
 
-Install package with a DI dependent framework:
 
-`Microsoft.Extensions.DependencyInjection:`
-
-```
-dotnet add package Injectify.Misrosoft.DependencyInjection
-```
-
-Starting from version `0.3.0` you need to reference a common, DI framework agnostic package:
-
-```
-dotnet add package Injectify
-```
 
 # Folder Structure
 

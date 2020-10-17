@@ -1,19 +1,23 @@
-﻿using Injectify.Abstractions;
+﻿using Autofac;
+using Injectify.Abstractions;
 using Injectify.Annotations;
-using Injectify.Microsoft.DependencyInjection.Extensions;
-using Microsoft.Extensions.DependencyInjection;
+using Injectify.Autofac.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace Injectify.Microsoft.DependencyInjection
+namespace Injectify.Autofac
 {
     internal class FrameWithServiceProvider : Frame
     {
-        private readonly ServiceProvider _serviceProvider;
+        private readonly IContainer _serviceProvider;
 
-        public FrameWithServiceProvider(ServiceProvider serviceProvider)
+        public FrameWithServiceProvider(IContainer serviceProvider)
         {
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             //this.Navigated += OnFrameNavigated;
@@ -31,7 +35,7 @@ namespace Injectify.Microsoft.DependencyInjection
                     throw new InvalidCastException($"'{e.Content.GetType().Name}' is not assignable to '{typeof(Page).Name}'");
 
                 //var serviceProvider = IntrospectionHelper.GetServiceProviderFromApplication<ServiceProvider>(Application.Current);
-                var context = new InjectionContext<Page, ServiceProvider>(e.Content as Page,
+                var context = new InjectionContext<Page, IContainer>(e.Content as Page,
                     _serviceProvider,
                     ServiceProviderExtensions.GetByPropertyInfo,
                     ServiceProviderExtensions.GetByParameterInfo);
