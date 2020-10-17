@@ -1,17 +1,15 @@
 ﻿<Page
-    x:Class="SampleAppV0.SomePage"
+    x:Class="SampleAppV1.ThirdPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SampleAppV0"
+    xmlns:local="using:SampleAppV1"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock FontSize="28" Margin="300,100">
-            Some page loaded.
-        </TextBlock>
-        <Button Width="150" Height="50" Margin="639,348,0,0" VerticalAlignment="Top" Click="Button_Click">Go to the third page</Button>
+        <Button Width="174" Height="50" Margin="639,348,0,0" VerticalAlignment="Top" Click="BackButton_Click">Go Back</Button>
+        <Button Width="174" Height="50" Margin="639,448,0,0" VerticalAlignment="Top" Click="GoToMain_Click">Go to the MAIN page</Button>
     </Grid>
 </Page>
