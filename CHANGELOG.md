@@ -1,4 +1,25 @@
 # Change Log\n\nAll notable changes to this project will be documented in this file. See [versionize](https://github.com/saintedlama/versionize) for commit guidelines.\n
+<a name="0.5.0"></a>
+## 0.5.0 (2020-10-17)
+
+### Bug Fixes
+
+* reduce double execution of the bootstrap in scope of navigation
+
+### Features
+
+* add nuspec build config for Injectify.Autofac package
+* add sample of usage with Autofac DI framework
+* add internals visibility for Injectify.Autofac package
+* add Injectify.Autofac package using Autofac DI framework
+
+### Other
+
+* update versions, tags, descriptions
+* remove Injectify.Microsoft.DependencyInjection package from internal visibility, since it is used only inside Injectify package
+* fix package name typo, update quick start with versions
+* Merge pull request #5 from vladhrapov/release/0.4.2
+
 <a name="0.4.2"></a>
 ## 0.4.2 (2020-10-10)
 
