@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 namespace Injectify.Helpers
 {
     /// <summary>
-    /// 
+    /// Set of types introspection helpers.
     /// </summary>
     internal sealed class IntrospectionHelper
     {
@@ -23,13 +23,13 @@ namespace Injectify.Helpers
         /// <typeparam name="TServiceCollection"></typeparam>
         /// <typeparam name="TServiceProvider"></typeparam>
         /// <returns></returns>
-        [Pure]
-        public static Type GetAppType<TServiceCollection, TServiceProvider>()
-            where TServiceCollection : class
-            where TServiceProvider : class =>
-                Assembly.GetEntryAssembly().GetTypes()
-                    .Where(type => type.IsClass && DoesImplementUwpApplicationInterface<TServiceProvider>(type))
-                    .FirstOrDefault();
+        //[Pure]
+        //public static Type GetAppType<TServiceCollection, TServiceProvider>()
+        //    where TServiceCollection : class
+        //    where TServiceProvider : class =>
+        //        Assembly.GetEntryAssembly().GetTypes()
+        //            .Where(type => type.IsClass && DoesImplementUwpApplicationInterface<TServiceProvider>(type))
+        //            .FirstOrDefault();
 
         /// <summary>
         /// 
@@ -49,20 +49,57 @@ namespace Injectify.Helpers
         /// <typeparam name="TServiceProvider"></typeparam>
         /// <param name="applicationInstance"></param>
         /// <returns></returns>
-        public static TServiceProvider GetServiceProviderFromApplication<TServiceProvider>(object applicationInstance)
+        public static TServiceProvider GetServiceProviderFromApplication<TApplication, TServiceProvider>(object applicationInstance)
+            where TApplication : class
             where TServiceProvider : class
         {
-            var applicationClass = Assembly.GetEntryAssembly().GetTypes()
-                .Where(type => type.IsClass && DoesImplementUwpApplicationInterface<TServiceProvider>(type))
-                .FirstOrDefault();
+            var serviceProviderPropInfo = GetServiceProviderProperty<TApplication, TServiceProvider>();
 
-            var servicesProperty = applicationClass.GetProperties()
-                .Where(pi => pi.PropertyType == typeof(TServiceProvider))
-                .FirstOrDefault();
+            if (serviceProviderPropInfo is null)
+            {
+                throw new InjectifyException(
+                    $"App type does not implement {typeof(IUwpApplication<>)}. Service provider property is absent.");
+            }
 
-            return servicesProperty.GetValue(applicationInstance) as TServiceProvider;
+            return serviceProviderPropInfo.GetValue(applicationInstance) as TServiceProvider;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TApplication"></typeparam>
+        /// <typeparam name="TServiceProvider"></typeparam>
+        /// <returns></returns>
+        public static PropertyInfo GetServiceProviderProperty<TApplication, TServiceProvider>()
+            where TApplication : class
+            where TServiceProvider : class
+        {
+            var uwpAppClass = Assembly.GetEntryAssembly()
+                .GetTypes()
+                .Where(t => t.IsClass &&
+                    (t.BaseType == typeof(TApplication)) &&
+                    DoesImplementUwpApplicationInterface<TServiceProvider>(t)) // ToDo: Maybe better to check whether implements IUwpApplication
+                .FirstOrDefault();
+
+            if (uwpAppClass is null)
+            {
+                throw new InjectifyException(
+                    $"There is no class that inherits base '{typeof(TApplication).Name}' class or does not implement '{typeof(IUwpApplication<>).Name}'!");
+            }
+
+            var serviceProviderPropInfo = uwpAppClass.GetProperties()
+                .Where(p => p.PropertyType == typeof(TServiceProvider))
+                .FirstOrDefault();
+
+            return serviceProviderPropInfo;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TPage"></typeparam>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public static MethodInfo GetOnInitMethod<TPage>(TPage page)
             where TPage : class
         {
@@ -85,10 +122,12 @@ namespace Injectify.Helpers
         /// <typeparam name="TServiceProvider"></typeparam>
         /// <param name="type"></param>
         /// <returns></returns>
+        [Pure]
         public static bool DoesImplementUwpApplicationInterface<TServiceProvider>(Type type)
             where TServiceProvider : class =>
                 DoesImplementInterface<TServiceProvider>(type, typeof(IUwpApplication<>));
 
+        [Pure]
         private static bool DoesImplementInterface<TGenericArgument>(Type type, Type interfaceType)
             where TGenericArgument : class =>
                 type.GetInterfaces()
