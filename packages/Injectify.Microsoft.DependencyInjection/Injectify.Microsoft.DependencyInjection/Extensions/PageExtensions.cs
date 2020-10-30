@@ -3,7 +3,6 @@ using Injectify.Annotations;
 using Injectify.Exceptions;
 using Injectify.Helpers;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -13,7 +12,7 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class Bootstrapper
+    public static class PageExtensions
     {
         /// <summary>
         /// 
@@ -25,18 +24,16 @@ namespace Injectify.Microsoft.DependencyInjection.Extensions
         {
             var classInjectable = page.GetType().GetCustomAttribute<InjectableAttribute>();
 
-            var serviceProvider = IntrospectionHelper.GetServiceProviderFromApplication<ServiceProvider>(Application.Current);
-            var context = new InjectionContext<TPage, ServiceProvider>(page,
-                serviceProvider,
-                ServiceProviderExtensions.GetByPropertyInfo,
-                ServiceProviderExtensions.GetByParameterInfo);
-
-            if (classInjectable is null)
+            if (classInjectable != null)
             {
-                throw new InjectifyException($"'{page.GetType().Name}' was not marked using '{nameof(InjectableAttribute)}'");
-            }
+                var serviceProvider = IntrospectionHelper.GetServiceProviderFromApplication<Application, ServiceProvider>(Application.Current);
+                var context = new InjectionContext<TPage, ServiceProvider>(page,
+                    serviceProvider,
+                    ServiceProviderExtensions.GetByPropertyInfo,
+                    ServiceProviderExtensions.GetByParameterInfo);
 
-            classInjectable.Bootstrap(context);
+                classInjectable.Bootstrap(context);
+            }
 
             return page;
         }
