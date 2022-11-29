@@ -28,6 +28,6 @@ jobs:
       - name: Restore dependencies and build RELEASE package
         working-directory: .
         run: |
-          dir "C:\Program Files\Microsoft Visual Studio\2022\Enterprise"
+          dir "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft"
           dotnet restore ./Injectify.sln
           dotnet build -c Release ./Injectify.sln
