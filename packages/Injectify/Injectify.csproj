@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Injectify.Abstractions" Version="[0.5.0]" />
+    <ProjectReference Include="..\Injectify.Abstractions\Injectify.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
