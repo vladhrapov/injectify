@@ -15,8 +15,6 @@
     <tags>UWP; DI; DependencyInjection; Injectify; Microsoft.Extensions.DependencyInjection;</tags>
     <dependencies>
       <!-- <group targetFramework=".NETFramework4.7.2" /> -->
-      <dependency id="Injectify" version="0.5.0" />
-      <dependency id="Injectify.Abstractions" version="0.5.0" />
       <dependency id="Microsoft.Extensions.DependencyInjection" version="3.1.7" />
       <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="3.1.7" />
       <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.2.10" />
