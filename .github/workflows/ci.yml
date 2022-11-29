@@ -40,4 +40,4 @@ jobs:
           # dir "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft"
           # dotnet restore ./Injectify.sln
           # dotnet build -c Release ./Injectify.sln
-          msbuild .\Injectify.sln -restore:True -t:Rebuild -p:Configuration=Release
+          msbuild .\Injectify.sln -restore:True -t:Rebuild -p:Configuration=Release -p:PlatformTarget=x86
