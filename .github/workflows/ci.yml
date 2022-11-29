@@ -29,9 +29,9 @@ jobs:
       # Print .NET SDK version
       - name: Print .NET, MSBuild, nuget version
         run: |
-          echo `dotnet --version`
-          echo `msbuild --version`
-          echo `nuget ?`
+          dotnet --version
+          msbuild --version
+          nuget ?
 
       # Restore project dependencies and build in Release mode
       - name: Restore dependencies and build RELEASE package
@@ -40,4 +40,4 @@ jobs:
           # dir "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft"
           # dotnet restore ./Injectify.sln
           # dotnet build -c Release ./Injectify.sln
-          'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\msbuild.exe' .\Injectify.sln -restore:True -t:Rebuild -p:Configuration=Release
+          msbuild .\Injectify.sln -restore:True -t:Rebuild -p:Configuration=Release
