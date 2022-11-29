@@ -24,7 +24,7 @@ jobs:
         uses: NuGet/setup-nuget@v1.0.5
         
       - name: setup-msbuild
-        uses: microsoft/setup-msbuild@v1
+        uses: microsoft/setup-msbuild@v1.1
 
       # Print .NET SDK version
       - name: Print .NET, MSBuild, nuget version
