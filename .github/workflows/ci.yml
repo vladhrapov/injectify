@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: windows-2019
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -20,16 +20,17 @@ jobs:
       #   with:
       #     dotnet-version: "6.0.x"
 
+      # Install NuGet package manager
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.5
         
+      # Install MSBuild
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1.1
 
       # Print .NET SDK version
       - name: Print .NET, MSBuild, nuget version
         run: |
-          dotnet --version
           msbuild --version
           nuget ?
 
