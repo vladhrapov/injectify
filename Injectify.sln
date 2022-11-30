@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32811.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Injectify.Abstractions", "packages\Injectify.Abstractions\Injectify.Abstractions.csproj", "{BEF2CEF0-613E-4D4A-8B6D-FDF0EEEC90C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Injectify.Abstractions", "src\Injectify.Abstractions\Injectify.Abstractions.csproj", "{BEF2CEF0-613E-4D4A-8B6D-FDF0EEEC90C9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Injectify", "packages\Injectify\Injectify.csproj", "{78F2C04F-327E-435A-9330-11843D8002B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Injectify", "src\Injectify\Injectify.csproj", "{78F2C04F-327E-435A-9330-11843D8002B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Injectify.Autofac", "packages\Injectify.Autofac\Injectify.Autofac.csproj", "{FDB82A92-CAAD-4CFB-AE79-C71E093F33AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Injectify.Autofac", "src\Injectify.Autofac\Injectify.Autofac.csproj", "{FDB82A92-CAAD-4CFB-AE79-C71E093F33AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Injectify.Microsoft.DependencyInjection", "packages\Injectify.Microsoft.DependencyInjection\Injectify.Microsoft.DependencyInjection.csproj", "{0055D9A3-3182-4D77-A500-5403328DF3D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Injectify.Microsoft.DependencyInjection", "src\Injectify.Microsoft.DependencyInjection\Injectify.Microsoft.DependencyInjection.csproj", "{0055D9A3-3182-4D77-A500-5403328DF3D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
