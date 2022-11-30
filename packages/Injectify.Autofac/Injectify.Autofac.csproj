@@ -150,9 +150,9 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.UI.Xaml">
+    <!-- <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.8.1</Version>
-    </PackageReference>
+    </PackageReference> -->
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Injectify.Abstractions\Injectify.Abstractions.csproj" />
