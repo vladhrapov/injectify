@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.5
+        
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Print MSBuild, nuget version
+        run: |
+          msbuild --version
+          nuget ?
+
+      - name: Restore dependencies and build RELEASE package
+        working-directory: .
+        run: |
+          msbuild .\Injectify.sln -restore:True -t:Rebuild -p:Configuration=Release
+
+      - name: Build nuget package
+        working-directory: .\src
+        run: |
+          $version = ([xml](Get-Content .\Injectify.Autofac\Injectify.Autofac.csproj)).Project.PropertyGroup.Version
+          echo "Autofac version: $version"
+
+          nuget pack .\Injectify.Autofac\Injectify.Autofac.nuspec `
+            -Build `
+            -Symbols `
+            -Properties Configuration=Release `
+            -Version $version
+
+          $version = ([xml](Get-Content .\Injectify.Microsoft.DependencyInjection\Injectify.Microsoft.DependencyInjection.csproj)).Project.PropertyGroup.Version
+          echo "Microsoft.DependencyInjection version: $version"
+
+          nuget pack .\Injectify.Microsoft.DependencyInjection\Injectify.Microsoft.DependencyInjection.nuspec `
+            -Build `
+            -Symbols `
+            -Properties Configuration=Release `
+            -Version $version
