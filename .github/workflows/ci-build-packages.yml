@@ -1,6 +1,8 @@
 name: CI
 
 on:
+  push:
+    branches: [ 'release/**' ]
   pull_request:
     branches: [ main ]
 
@@ -38,7 +40,8 @@ jobs:
             -Build `
             -Symbols `
             -Properties Configuration=Release `
-            -Version $version
+            -Version $version `
+            -OutputDirectory .\Injectify.Autofac\bin
 
           $version = ([xml](Get-Content .\Injectify.Microsoft.DependencyInjection\Injectify.Microsoft.DependencyInjection.csproj)).Project.PropertyGroup.Version
           echo "Microsoft.DependencyInjection version: $version"
@@ -47,4 +50,5 @@ jobs:
             -Build `
             -Symbols `
             -Properties Configuration=Release `
-            -Version $version
+            -Version $version `
+            -OutputDirectory .\Injectify.Microsoft.DependencyInjection\bin
