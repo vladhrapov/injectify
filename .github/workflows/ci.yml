@@ -14,32 +14,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Install latest .NET SDK
-      # - name: Setup .NET SDK
-      #   uses: actions/setup-dotnet@v1
-      #   with:
-      #     dotnet-version: "6.0.x"
-
-      # Install NuGet package manager
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.5
         
-      # Install MSBuild
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1.1
 
-      # Print .NET SDK version
-      - name: Print .NET, MSBuild, nuget version
+      - name: Print MSBuild, nuget version
         run: |
           msbuild --version
           nuget ?
 
-      # Restore project dependencies and build in Release mode
       - name: Restore dependencies and build RELEASE package
         working-directory: .
         run: |
-          # dir "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Microsoft"
-          # dotnet restore ./Injectify.sln
-          # dotnet build -c Release ./Injectify.sln
-          # -p:PlatformTarget=x86
           msbuild .\Injectify.sln -restore:True -t:Rebuild -p:Configuration=Release
