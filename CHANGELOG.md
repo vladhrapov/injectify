@@ -1,4 +1,19 @@
 # Change Log\n\nAll notable changes to this project will be documented in this file. See [versionize](https://github.com/saintedlama/versionize) for commit guidelines.\n
+<a name="0.6.0"></a>
+## [0.6.0](https://www.github.com/vladhrapov/injectify/releases/tag/v0.6.0) (2022-12-4)
+
+### Features
+
+* add ci workflow (#9) ([ee28a5d](https://www.github.com/vladhrapov/injectify/commit/ee28a5dab6f9173712fa6a852f6d458168a7e0a2))
+* add release ci configuration with publishing packages to Nuget (#15) ([7d31f6f](https://www.github.com/vladhrapov/injectify/commit/7d31f6f5f84ec8108130f3867a21c5a43dd19a56))
+* **injectify:** move shared logic from specific implementations to Injectify common lib ([486cf5f](https://www.github.com/vladhrapov/injectify/commit/486cf5ff7b2477df43a3e516ef157a249e3248e5))
+* **injectify.autofac:** move common implementation from Injectify.Autofac to Injectify common package ([d6f8d73](https://www.github.com/vladhrapov/injectify/commit/d6f8d73e63efdef9cfbbee983f0e58709eb4037e))
+* **injectify.microsoft.dependencyinjection:** move shared logic from Injectify.Microsoft.DependencyInjection to Injectify package ([117a7ef](https://www.github.com/vladhrapov/injectify/commit/117a7ef0ee5ceb2348d4a5cfc88b0903fcb64c1f))
+
+### Bug Fixes
+
+* update ci trigger branches, add packaging output path (#13) ([dcbb4c8](https://www.github.com/vladhrapov/injectify/commit/dcbb4c89726913e337163e176e832f031f8f1800))
+
 <a name="0.5.0"></a>
 ## 0.5.0 (2020-10-17)
 
