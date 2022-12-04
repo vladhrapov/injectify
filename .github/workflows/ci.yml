@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.5
+        
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Print MSBuild, nuget version
+        run: |
+          msbuild --version
+          nuget ?
+
+      - name: Restore dependencies and build RELEASE package
+        working-directory: .
+        run: |
+          msbuild .\Injectify.sln -restore:True -t:Rebuild -p:Configuration=Release

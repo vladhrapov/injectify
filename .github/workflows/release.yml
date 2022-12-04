@@ -1,0 +1,86 @@
+name: release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1.0.5
+        
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Print MSBuild, nuget version
+        run: |
+          msbuild --version
+          nuget ?
+
+      - name: Restore dependencies and build RELEASE package
+        working-directory: .
+        run: |
+          msbuild .\Injectify.sln -restore:True -t:Rebuild -p:Configuration=Release
+
+      - name: Build Nuget packages
+        working-directory: .\src
+        run: |
+          $version = ([xml](Get-Content .\Injectify.Autofac\Injectify.Autofac.csproj)).Project.PropertyGroup.Version
+          echo "Autofac version: $version"
+
+          nuget pack .\Injectify.Autofac\Injectify.Autofac.nuspec `
+            -Build `
+            -Symbols `
+            -Properties Configuration=Release `
+            -Version $version `
+            -OutputDirectory .\Injectify.Autofac\bin
+
+          $version = ([xml](Get-Content .\Injectify.Microsoft.DependencyInjection\Injectify.Microsoft.DependencyInjection.csproj)).Project.PropertyGroup.Version
+          echo "Microsoft.DependencyInjection version: $version"
+
+          nuget pack .\Injectify.Microsoft.DependencyInjection\Injectify.Microsoft.DependencyInjection.nuspec `
+            -Build `
+            -Symbols `
+            -Properties Configuration=Release `
+            -Version $version `
+            -OutputDirectory .\Injectify.Microsoft.DependencyInjection\bin
+
+      - name: Publish Nuget packages
+        working-directory: .\src
+        env:
+          nuget_api_key: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          echo "Publishing Injectify.Abstractions..."
+          $package = Get-Item -Path ".\Injectify.Abstractions\bin\Release\*.nupkg" | select -First 1
+          nuget push ".\Injectify.Abstractions\bin\Release\$($package.Name)" `
+            -ApiKey $nuget_api_key `
+            -Source "https://api.nuget.org/v3/index.json" `
+            -SkipDuplicate $true
+
+          echo "Publishing Injectify..."
+          $package = Get-Item -Path ".\Injectify\bin\Release\*.nupkg" | select -First 1
+          nuget push ".\Injectify\bin\Release\$($package.Name)" `
+            -ApiKey $nuget_api_key `
+            -Source "https://api.nuget.org/v3/index.json" `
+            -SkipDuplicate $true
+
+          echo "Publishing Injectify.Autofac..."
+          $package = Get-Item -Path ".\Injectify.Autofac\bin\*.nupkg" | select -First 1
+          nuget push ".\Injectify.Autofac\bin\$($package.Name)" `
+            -ApiKey $nuget_api_key `
+            -Source "https://api.nuget.org/v3/index.json" `
+            -SkipDuplicate $true
+
+          echo "Publishing Injectify.Microsoft.DependencyInjection..."
+          $package = Get-Item -Path ".\Injectify.Microsoft.DependencyInjection\bin\*.nupkg" | select -First 1
+          nuget push ".\Injectify.Microsoft.DependencyInjection\bin\$($package.Name)" `
+            -ApiKey $nuget_api_key `
+            -Source "https://api.nuget.org/v3/index.json" `
+            -SkipDuplicate $true
+                    

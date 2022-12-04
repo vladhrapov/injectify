@@ -5,6 +5,7 @@ obj/
 
 # Folders
 packages/**/packages
+nupkg/
 
 # Files
 *.suo

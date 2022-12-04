@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.6.0</Version>
+    <Company>-</Company>
+    <Title>Injectify</Title>
+    <Product>Injectify</Product>
+    <Description>Dependency injection and startup common implementations and helpers for UWP applications.</Description>
+    <Authors>Vlad Khrapov</Authors>
+    <RepositoryUrl>https://github.com/vladhrapov/injectify</RepositoryUrl>
+    <PackageTags>UWP; DI; DependencyInjection; Injectify;</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright>Copyright © 2022</Copyright>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Injectify.Abstractions\Injectify.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

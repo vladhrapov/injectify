@@ -37,7 +37,11 @@ Microsoft.Extensions.DependencyInjection:
 dotnet add package Injectify.Microsoft.DependencyInjection
 ```
 
+Autofac:
 
+```
+dotnet add package Injectify.Autofac
+```
 
 # Folder Structure
 
@@ -49,6 +53,7 @@ Injectify consists of a 2 main packages with a common code:
 
 Additional packages dependent on a specific DI framework:
  - `Injectify.Microsoft.DependencyInjection` (Microsoft.Extentions.DependencyInjection)
+ - `Injectify.Autofac` (Autofac)
 
 # Code Samples
 
