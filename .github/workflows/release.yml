@@ -2,7 +2,7 @@ name: release
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -56,31 +56,31 @@ jobs:
         env:
           nuget_api_key: ${{ secrets.NUGET_API_KEY }}
         run: |
-          echo "Publishing Injectify.Abstractions..."
+          echo "Publishing Injectify.Abstractions... $($env:nuget_api_key.Length)"
           $package = Get-Item -Path ".\Injectify.Abstractions\bin\Release\*.nupkg" | select -First 1
           nuget push ".\Injectify.Abstractions\bin\Release\$($package.Name)" `
-            -ApiKey $nuget_api_key `
+            -ApiKey $env:nuget_api_key `
             -Source "https://api.nuget.org/v3/index.json" `
             -SkipDuplicate $true
 
           echo "Publishing Injectify..."
           $package = Get-Item -Path ".\Injectify\bin\Release\*.nupkg" | select -First 1
           nuget push ".\Injectify\bin\Release\$($package.Name)" `
-            -ApiKey $nuget_api_key `
+            -ApiKey $env:nuget_api_key `
             -Source "https://api.nuget.org/v3/index.json" `
             -SkipDuplicate $true
 
           echo "Publishing Injectify.Autofac..."
           $package = Get-Item -Path ".\Injectify.Autofac\bin\*.nupkg" | select -First 1
           nuget push ".\Injectify.Autofac\bin\$($package.Name)" `
-            -ApiKey $nuget_api_key `
+            -ApiKey $env:nuget_api_key `
             -Source "https://api.nuget.org/v3/index.json" `
             -SkipDuplicate $true
 
           echo "Publishing Injectify.Microsoft.DependencyInjection..."
           $package = Get-Item -Path ".\Injectify.Microsoft.DependencyInjection\bin\*.nupkg" | select -First 1
           nuget push ".\Injectify.Microsoft.DependencyInjection\bin\$($package.Name)" `
-            -ApiKey $nuget_api_key `
+            -ApiKey $env:nuget_api_key `
             -Source "https://api.nuget.org/v3/index.json" `
             -SkipDuplicate $true
                     
