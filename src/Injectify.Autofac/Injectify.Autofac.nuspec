@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Injectify.Autofac</id>
-    <version>0.5.0</version>
+    <version>0.6.0</version>
     <title>Injectify.Autofac</title>
     <authors>Vlad Khrapov</authors>
     <owners>Vlad Khrapov</owners>
@@ -14,8 +14,9 @@
     <copyright>Copyright © 2022</copyright>
     <tags>UWP; DI; DependencyInjection; Injectify; Autofac;</tags>
     <dependencies>
-      <!-- <group targetFramework=".NETFramework4.7.2" /> -->
       <dependency id="Autofac" version="5.0.0" />
+      <dependency id="Injectify" version="0.6.0" />
+      <dependency id="Injectify.Abstractions" version="0.6.0" />
       <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="6.2.10" />
     </dependencies>
   </metadata>
