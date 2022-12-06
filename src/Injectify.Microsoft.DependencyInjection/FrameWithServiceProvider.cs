@@ -30,7 +30,6 @@ namespace Injectify.Microsoft.DependencyInjection
                 if (!(e.Content is Page))
                     throw new InvalidCastException($"'{e.Content.GetType().Name}' is not assignable to '{typeof(Page).Name}'");
 
-                //var serviceProvider = IntrospectionHelper.GetServiceProviderFromApplication<ServiceProvider>(Application.Current);
                 var context = new InjectionContext<Page, ServiceProvider>(e.Content as Page,
                     _serviceProvider,
                     ServiceProviderExtensions.GetByPropertyInfo,
