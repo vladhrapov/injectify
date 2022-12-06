@@ -6,18 +6,16 @@ using System.Reflection;
 
 namespace Injectify.Annotations
 {
+    /// <inheritdoc cref="Injectify.Abstractions.IOnInit"/>
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public sealed class OnInitAttribute : Attribute, IOnInit
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TPage"></typeparam>
-        /// <typeparam name="TServiceProvider"></typeparam>
-        /// <param name="context"></param>
-        /// <param name="methodInfo"></param>
-        public void Bootstrap<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context, MethodInfo methodInfo)
-            where TPage : class
+        /// <inheritdoc cref="Injectify.Abstractions.IOnInit
+        ///     .Bootstrap{TPage, TServiceProvider}(InjectionContext{TPage, TServiceProvider}, MethodInfo)"/>
+        public void Bootstrap<TPage, TServiceProvider>(
+            InjectionContext<TPage, TServiceProvider> context,
+            MethodInfo methodInfo)
+                where TPage : class
         {
             // OnInit method info
             var parameters = methodInfo.GetParameters();
