@@ -1,4 +1,15 @@
 # Change Log\n\nAll notable changes to this project will be documented in this file. See [versionize](https://github.com/saintedlama/versionize) for commit guidelines.\n
+<a name="0.7.0"></a>
+## [0.7.0](https://www.github.com/vladhrapov/injectify/releases/tag/v0.7.0) (2022-12-7)
+
+### Features
+
+* add types and members annotations for Injectify & Injectify.Abstractions (#20) ([923d4d7](https://www.github.com/vladhrapov/injectify/commit/923d4d70ebc7dcae25cc67a705f6c0b44c05d9b7))
+
+### Bug Fixes
+
+* missing external dependencies to injectify core lib (#19) ([4b8a354](https://www.github.com/vladhrapov/injectify/commit/4b8a354e553eff3630ccd1a83e15d1147408ddd3))
+
 <a name="0.6.0"></a>
 ## [0.6.0](https://www.github.com/vladhrapov/injectify/releases/tag/v0.6.0) (2022-12-4)
 

@@ -10,18 +10,29 @@ using System.Runtime.CompilerServices;
 
 namespace Injectify.Helpers
 {
+    /// <summary>
+    /// Bootstrapper for a class implementing
+    /// <see cref="Injectify.Abstractions.IStartup{TServiceCollection}"/>,
+    /// DI service provider and various annotations marked with
+    /// <see cref="Injectify.Annotations.InjectAttribute"/>,
+    /// <see cref="Injectify.Annotations.OnInitAttribute"/>.
+    /// </summary>
     internal sealed class BootstrapHelper
     {
         /// <summary>
-        /// 
+        /// Bootstraps a class implementing
+        /// <see cref="Injectify.Abstractions.IStartup{TServiceCollection}"/>
         /// </summary>
-        /// <typeparam name="TApplication"></typeparam>
-        /// <typeparam name="TServiceCollection"></typeparam>
-        /// <typeparam name="TServiceProvider"></typeparam>
-        /// <param name="application"></param>
-        /// <param name="services"></param>
-        /// <param name="providerBuilder"></param>
-        public static void BootstrapStartup<TApplication, TServiceCollection, TServiceProvider>(TApplication application,
+        /// <typeparam name="TApplication">Application type to introspect.</typeparam>
+        /// <typeparam name="TServiceCollection">
+        /// Service collection type contining registered instances (DI specific).
+        /// </typeparam>
+        /// <typeparam name="TServiceProvider">Service provider type (DI specific).</typeparam>
+        /// <param name="application">Application type instance.</param>
+        /// <param name="services">Service collection instance (DI specific).</param>
+        /// <param name="providerBuilder">Function returning service provider instance (DI specific).</param>
+        public static void BootstrapStartup<TApplication, TServiceCollection, TServiceProvider>(
+            TApplication application,
             TServiceCollection services,
             Func<TServiceCollection, TServiceProvider> providerBuilder)
                 where TApplication : class
@@ -40,17 +51,38 @@ namespace Injectify.Helpers
             BootstrapHelper.BootstrapServiceProvider(application, provider);
         }
 
-        public static void BootstrapServiceProvider<TApplication, TServiceProvider>(TApplication application, TServiceProvider provider)
-            where TApplication : class
-            where TServiceProvider : class
+        /// <summary>
+        /// Bootstraps service provider and sets provider instance
+        /// to application class property.
+        /// </summary>
+        /// <typeparam name="TApplication">Application type to introspect.</typeparam>
+        /// <typeparam name="TServiceProvider">Service provider type (DI specific).</typeparam>
+        /// <param name="application">Application type instance.</param>
+        /// <param name="provider">Service provider instance (DI specific).</param>
+        public static void BootstrapServiceProvider<TApplication, TServiceProvider>(
+            TApplication application,
+            TServiceProvider provider)
+                where TApplication : class
+                where TServiceProvider : class
         {
             var servicesProp = IntrospectionHelper.GetServiceProviderProperty<TApplication, TServiceProvider>();
 
             servicesProp.SetValue(application, provider);
         }
 
-        public static void BootstrapProps<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context)
-            where TPage : class
+        /// <summary>
+        /// Bootstraps properties marked with <see cref="Injectify.Annotations.InjectAttribute"/>
+        /// inside class marked with <see cref="Injectify.Annotations.InjectableAttribute"/>.
+        /// </summary>
+        /// <typeparam name="TPage">Page type (Framework specific).</typeparam>
+        /// <typeparam name="TServiceProvider">Service provider type (DI specific).</typeparam>
+        /// <param name="context">
+        /// Injection context for a page, including service provider, registered services,
+        /// service selectors and other required info.
+        /// </param>
+        public static void BootstrapProps<TPage, TServiceProvider>(
+            InjectionContext<TPage, TServiceProvider> context)
+                where TPage : class
         {
             var injectPropsInfo = context.Page
                 .GetType()
@@ -68,6 +100,16 @@ namespace Injectify.Helpers
             }
         }
 
+        /// <summary>
+        /// Bootstraps method marked with <see cref="Injectify.Annotations.OnInitAttribute"/>
+        /// attribute and calls method with found parameters.
+        /// </summary>
+        /// <typeparam name="TPage">Page type (Framework specific).</typeparam>
+        /// <typeparam name="TServiceProvider">Service provider type (DI specific).</typeparam>
+        /// <param name="context">
+        /// Injection context for a page, including service provider, registered services,
+        /// service selectors and other required info.
+        /// </param>
         public static void BootstrapInitParams<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context)
             where TPage : class
         {

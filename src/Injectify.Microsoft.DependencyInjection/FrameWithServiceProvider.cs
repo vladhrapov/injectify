@@ -9,10 +9,18 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Injectify.Microsoft.DependencyInjection
 {
+    /// <summary>
+    /// Frame class with service provider extends basic Frame control.
+    /// </summary>
     internal class FrameWithServiceProvider : Frame
     {
         private readonly ServiceProvider _serviceProvider;
 
+        /// <summary>
+        /// Constructor with service provider parameter.
+        /// </summary>
+        /// <param name="serviceProvider">Service provider instance.</param>
+        /// <exception cref="ArgumentNullException">Exception thrown for null parameter.</exception>
         public FrameWithServiceProvider(ServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
@@ -30,7 +38,6 @@ namespace Injectify.Microsoft.DependencyInjection
                 if (!(e.Content is Page))
                     throw new InvalidCastException($"'{e.Content.GetType().Name}' is not assignable to '{typeof(Page).Name}'");
 
-                //var serviceProvider = IntrospectionHelper.GetServiceProviderFromApplication<ServiceProvider>(Application.Current);
                 var context = new InjectionContext<Page, ServiceProvider>(e.Content as Page,
                     _serviceProvider,
                     ServiceProviderExtensions.GetByPropertyInfo,

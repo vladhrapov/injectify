@@ -5,24 +5,20 @@ using System;
 
 namespace Injectify.Annotations
 {
-    /// <summary>
-    /// 
-    /// </summary>
+    /// <inheritdoc cref="Injectify.Abstractions.IInjectable"/>
     [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     public class InjectableAttribute : Attribute, IInjectable
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TPage"></typeparam>
-        /// <typeparam name="TServiceProvider"></typeparam>
-        /// <param name="context"></param>
-        public void Bootstrap<TPage, TServiceProvider>(InjectionContext<TPage, TServiceProvider> context)
-            where TPage : class
+        /// <inheritdoc cref="Injectify.Abstractions.IInjectable
+        ///     .Bootstrap{TPage, TServiceProvider}(InjectionContext{TPage, TServiceProvider})"/>
+        public void Bootstrap<TPage, TServiceProvider>(
+            InjectionContext<TPage, TServiceProvider> context)
+                where TPage : class
         {
             if (context.ServiceProvider == null)
             {
-                throw new InjectifyException($"'{nameof(context.ServiceProvider)}' should not be null.");
+                throw new InjectifyException(
+                    $"'{nameof(context.ServiceProvider)}' should not be null.");
             }
 
             BootstrapHelper.BootstrapProps(context);
